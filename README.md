@@ -87,10 +87,7 @@ Allows users to add a new recipe via the /addRecipe endpoint, responding with a 
 Retrieves a list of distinct ingredients through the /callIngredients endpoint. Success returns a code of 200 with an array of ingredient strings; error returns code 500 with an error message.
 
 **User Signup:**
-Enables user registration at the /signup endpoint. Success returns a code of 200 with a success indicator; error returns code 500 with an error message.
-
-**User Login:**
-Authenticates a user via the /login endpoint, returning a code of 200 with a success indicator and user object on success. In case of an error, it returns a code of 500 with an error message.
+Our application utilizes Auth0's APIs to provide Single Sign-On (SSO) authentication, allowing users to sign in through social media accounts or create a new account within our system. This integration supports various identity protocols, including OpenID Connect, OAuth, and SAML.
 
 **Get Bookmarks:**
 Retrieves bookmarked recipes for a user through the /getBookmarks endpoint. Success returns a code of 200 with an array of bookmarked recipes; error returns code 500 with an error message.

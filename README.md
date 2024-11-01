@@ -1,6 +1,6 @@
 # Enhanced Recipe Recommender: Introducing additional features and addressing issues for an improved user experience.
 
-![](Reciperec.gif)
+![](Recipe_1.gif)
 
 ## Deployed Link: https://reciperecommendationsystem.vercel.app/
 

@@ -119,7 +119,7 @@ Adds a recipe to a user's profile bookmarks via the /addRecipeToProfile endpoint
 
 ### Installation:
 Check out our comprehensive YouTube video demonstrating each step for easy guidance. [Project Setup](https://youtu.be/uKh-afpUdh0)
-- clone repository using `git clone https://github.com/pnprathima/Recipe_Recommender.git`
+- clone repository using `https://github.com/Software-Engineering-Folks/RecipeRecommender.git`
 - setup for frontend
   open terminal and navigate to the **frontend** folder and execute the following:
   ```

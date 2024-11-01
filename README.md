@@ -51,11 +51,26 @@ We've added <b> numerous entertaining new features and fixes to enhance user-fri
 ## Feature additions: Enhancements, Upgrades and BugFixes:
 Presenting our latest additions: Here's a comprehensive list of all our new features, enhancements, and upgrades! <br>
 1. User Profile: Our application now features Single Sign-On (SSO) authentication, allowing you to log in seamlessly through your social media accounts or by creating a new account within our system. This streamlined authentication process not only enhances security but also provides personalized experiences and customized access to your preferences and activities. Further details will be discussed in the following points. Your profile, information, and preferred recipes are now conveniently located in a designated area, simplifying the management of all your content in one organized space.
-2. Bookmarks: Picture this scenario: You're commuting, scrolling through intriguing recipes in our app. Thanks to a cutting-edge feature, you can now save them instantly. The introduction of dedicated user profiles elevates your experience. Simply sign up, log in, and curate your favorite recipes in the "bookmarks" section under your profile. When the time comes to cook, everything awaits you – seamlessly organized and easily accessible.
-3. Search for recipes by name: Previously limited to ingredient-based searches only, our system now boasts an exciting upgrade. You can now search for recipes by name! Ever craved enchiladas without knowing the recipe? Simply input "enchiladas," peruse based on features, and relish the culinary journey.
-4. Refactoring the UI: We've eliminated inactive buttons and links, employing a technical process termed "system refactoring" to enhance functionality and optimize the user interface.
-5. System security upgrade: We observed some passwords present in the codebase, which is a major security threat. We have ensured to removed this and move it to the DB. Additionally, we have implemented secure logins and logouts ensuring the prevention of duplicate entries and safeguards credentials, fortifying the overall security of the system.
-6. The requirements.txt file has been updated to ensure forward compatibility by specifying package versions greater than or equal to the ones explicitly mentioned. This modification allows for the installation of packages with versions that meet or exceed the specified ones, thus accommodating future updates and maintaining compatibility with evolving dependencies.
+2. Refactoring the UI: We've eliminated inactive buttons and links, employing a technical process termed "system refactoring" to enhance functionality and optimize the user interface.
+3. Chatbot: We've introduced a Chatbot feature to enhance user engagement and make recipe discovery even more accessible. The chatbot serves as a virtual assistant, guiding you through various functionalities of our application directly from your messaging platform  
+
+### Interaction Flows for Chatbot
+
+1. **Search Recipe by Name**
+
+   - **Prompt**: After `/start`, select the option to name a recipe.
+   - **Outcome**: Receive step-by-step instructions if the recipe is available.
+
+2. **Find Recipes by Ingredients**
+
+   - **Prompt**: Provide the ingredients you have.
+   - **Outcome**: Get suggestions for recipes you can make.
+
+3. **Access the Website**
+
+   - **Prompt**: Choose to open the website.
+   - **Outcome**: Receive a link to our website.
+
 
 ## Documentation and Project Flow:
 ![](flow-rr.gif) <br><br>

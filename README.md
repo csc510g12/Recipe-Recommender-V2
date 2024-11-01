@@ -74,6 +74,7 @@ Presenting our latest additions: Here's a comprehensive list of all our new feat
 
 ## Documentation and Project Flow:
 ![](flow-rr.gif) <br><br>
+![](Chat_bot.gif) <br><br>
 1. User Registration and Authentication: A Universal sign in page, where you can create an account or sign up through any of you social media accounts
 3. Search Recipes by Ingredients: Input your available ingredients to discover relevant recipes based on ingredient names.
 4. Search Recipes by Dish Name: Locate recipes by specifying the dish name in the search.

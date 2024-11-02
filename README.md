@@ -194,12 +194,12 @@ Annadurai,Harshitha <br>
 Bhoja Ramamanohara,Pannaga Rao <br>
 Masineni Prasanna Kumar,Karthik <br>
 Niranjana,Prathima Putreddy <br>
+Om Tandel, Snehil Behar, Devang Sarogi <br>
 
 ## Troubleshooting and Support
 Common issues observed and solutions:<br>
-1. requirements.txt failing: this issue should no longer be seen, as we have used ~= to ensure your systems pick up versions compatible with the other packages. However, if you happen to see the issue, modify the requirements.txt file to use a more recent version.
-2. python was not found: we recommend using python3 as some of the modules are available only on Python3. You may either install Python3 or setup a virtual environment(we suggest the latter if you are currently running other applications on python2)
-Facing other issues with the application? Mail us - [teamsoftwareeng7@gmail.com](teamsoftwareeng7@gmail.com)
+1. Sometimes there would be vulnerabilities found in the backend, so fix it by running 'npm install nodemon --save-dev', because npm audit fix --force won't fix it.
+Facing other issues with the application? Mail us - [software.72.engineering@gmail.com](software.72.engineering@gmail.com)
 
 
 

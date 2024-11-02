@@ -183,13 +183,10 @@ Please see our [CONTRIBUTING.md](https://github.com/pnprathima/Recipe_Recommende
 
 ## FUTURE SCOPE
 
-Implement personalized diertary requirements based filtering.
-
-Meal planning- saving data for all meals of the day.
-
-Voice to text integration. 
-
-Chatbot integration- to answer quick queries about the recipe.
+1. Nutritional Info: Show calorie counts and nutrition facts for each recipe.
+2. Recipe Recommendations: Suggest similar recipes with a smart recommendation model.
+3. Ingredient Price Comparison: Link ingredients to compare prices across multiple websites.
+4. Smart Meal Planner: Automatically generate weekly meal plans and grocery lists based on user preferences and available ingredients.
 
 ## Team Members
 

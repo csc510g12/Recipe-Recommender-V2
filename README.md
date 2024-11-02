@@ -163,7 +163,6 @@ Check out our comprehensive YouTube video demonstrating each step for easy guida
 1. Major release 4.1 - Added SSO sign-in
 2. Major Release 4.2 - Chatbot Integration
 3. Major Release 4.3 - Major release- Included minor bug fixes and documentation updates<br>
-[Read our detailed release notes](https://github.com/pnprathima/Recipe_Recommender/releases) <br>
 <br>
 
 

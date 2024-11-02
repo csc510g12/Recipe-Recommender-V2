@@ -33,17 +33,11 @@
    
 <h2> What is Recipe Recommender? </h2>
 
-Meet Recipe Recommender, your ultimate kitchen companion! Say goodbye to the dilemma of deciding what to cook with the ingredients on hand. We've revolutionized the cooking experience with an application that effortlessly suggests delicious recipes based on your kitchen inventory.  <br>
+Introducing Recipe Recommender—the smart solution to your cooking dilemmas! Our latest version is packed with new features designed to make your kitchen experience smoother, more interactive, and more personalized than ever.
 
-Unlock the full potential of your pantry and fridge as our innovative software guides you in selecting perfect dishes tailored to your current ingredients. Cooking is now an exciting adventure rather than a daunting task. Immerse yourself in a realm of limitless culinary possibilities with Recipe Recommender.  <br>
+With SSO Sign-In, logging in has never been easier or more secure—now you can access your account via social media or email with just a click. Our AI-Powered Recipe Suggestions take personalization to a new level, recommending dishes that fit your tastes and ingredients seamlessly. To make exploring recipes even more intuitive, we’ve introduced an Interactive Chatbot that offers three tailored options to help you find exactly what you’re craving. And, with an Enhanced UI and Bug Fixes, browsing and saving recipes is smoother than ever.
 
-We've added <b> numerous entertaining new features and fixes to enhance user-friendliness.</b> <br>
-1. Craving enchiladas but unsure how to cook Mexican food? Now, you can search for recipes by names! Just type in "enchiladas," choose a recipe based on its features, and enjoy. <br>
-
-2. Imagine finding interesting recipes during your commute. With another new feature, you can save them on the go. We've also introduced dedicated user profiles. Sign up, log in, and save your favorite recipes under your profile in the "bookmarks" section. When you're ready to cook, everything will be waiting for you.  <br>
-
-3. That's not all! We've removed non-functional buttons, technically known as "refactoring the system."  <br>
-4. Your profile, information, and favorite recipes now have a dedicated space. Secure logins and logouts ensure no duplicate entries or exposed credentials, making the system more secure.
+From personalized recommendations to a sleek, user-friendly design, Recipe Recommender is here to inspire your next delicious creation!
 
 
 <br> <b> More about our new additions in our next section!</b>
@@ -110,6 +104,10 @@ Retrieves bookmarked recipes for a user through the /getBookmarks endpoint. Succ
 **Add Recipe to User Profile:**
 Adds a recipe to a user's profile bookmarks via the /addRecipeToProfile endpoint. Success returns a code of 200 with the count of modified items; error returns code 500 with an error message.
 
+**OPEN AI API**
+Suggests you recipe, powered by artifical intelligence.
+
+
 <br>Detailed documentation can be found at: [API Docs](https://github.com/pnprathima/Recipe_Recommender/blob/master/API_Documentation.pdf)
 
 ## Technology Stack
@@ -127,8 +125,8 @@ Adds a recipe to a user's profile bookmarks via the /addRecipeToProfile endpoint
 
 ## Key Software Requirements
 
-- [Node.js v18.17.1](https://nodejs.org/en/download/)
-- [NPM v10.1.0](https://nodejs.org/en/download/)
+- [Node.js v20.17.0](https://nodejs.org/en/download/)
+- [NPM v10.8.2](https://nodejs.org/en/download/)
 
 ## Project Setup Steps:
 
@@ -162,9 +160,9 @@ Check out our comprehensive YouTube video demonstrating each step for easy guida
 
 
 ## Release Made in this cycle <br>
-1. Major release 3.1 - Major release to add search by recipe, user registration, user login and bookmarks.
-2. Hotfix Release 3.1.2 - Minor version release to add test case for login
-3. Major Release 3.2 - Major release- Included test cases addition, user registration, minor bug fixes and documentation updates<br>
+1. Major release 4.1 - Added SSO sign-in
+2. Major Release 4.2 - Chatbot Integration
+3. Major Release 4.3 - Major release- Included minor bug fixes and documentation updates<br>
 [Read our detailed release notes](https://github.com/pnprathima/Recipe_Recommender/releases) <br>
 <br>
 

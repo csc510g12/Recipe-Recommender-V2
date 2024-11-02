@@ -45,8 +45,9 @@ From personalized recommendations to a sleek, user-friendly design, Recipe Recom
 ## Feature additions: Enhancements, Upgrades and BugFixes:
 Presenting our latest additions: Here's a comprehensive list of all our new features, enhancements, and upgrades! <br>
 1. User Profile: Our application now features Single Sign-On (SSO) authentication, allowing you to log in seamlessly through your social media accounts or by creating a new account within our system. This streamlined authentication process not only enhances security but also provides personalized experiences and customized access to your preferences and activities. Further details will be discussed in the following points. Your profile, information, and preferred recipes are now conveniently located in a designated area, simplifying the management of all your content in one organized space.
-2. Refactoring the UI: We've eliminated inactive buttons and links, employing a technical process termed "system refactoring" to enhance functionality and optimize the user interface.
-3. Chatbot: We've introduced a Chatbot feature to enhance user engagement and make recipe discovery even more accessible. The chatbot serves as a virtual assistant, guiding you through various functionalities of our application directly from your messaging platform  
+2. UI Refactoring: We’ve resolved multiple UI bugs, including issues with bookmark functionality and recipe cardholders, by removing inactive buttons and links. This thorough “system refactoring” has improved functionality and optimized the overall user experience.
+3. Chatbot: We've introduced a Chatbot feature to enhance user engagement and make recipe discovery even more accessible. The chatbot serves as a virtual assistant, guiding you through various functionalities of our application directly from your messaging platform
+4. We’ve integrated OpenAI to enhance our recipe recommendations, using artificial intelligence to provide smarter, more personalized suggestions tailored to your preferences.
 
 ### Interaction Flows for Chatbot
 

@@ -198,7 +198,8 @@ Om Tandel, Snehil Behar, Devang Sarogi <br>
 
 ## Troubleshooting and Support
 Common issues observed and solutions:<br>
-1. Sometimes there would be vulnerabilities found in the backend, so fix it by running 'npm install nodemon --save-dev', because npm audit fix --force won't fix it.
+1. Occasionally, vulnerabilities may be detected in the backend. To address these, run npm install nodemon --save-dev, as npm audit fix --force may not resolve the issue.
+2. The Auth0 login may occasionally experience callback errors if specific URLs aren’t specified on the application page. If you encounter this issue, ensure you add the hosting address to the allowed callback URLs.
 Facing other issues with the application? Mail us - [software.72.engineering@gmail.com](software.72.engineering@gmail.com)
 
 

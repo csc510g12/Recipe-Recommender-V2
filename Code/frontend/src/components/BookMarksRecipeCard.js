@@ -1,19 +1,34 @@
-/* MIT License
-
-Copyright (c) 2023 Pannaga Rao, Harshitha, Prathima, Karthik  */
-
 import React, { useState } from "react";
-import { Box, Card, CardHeader, Heading, Text, CardBody, Image, Flex, Badge, Skeleton, Stack} from "@chakra-ui/react";
-import { ClockIcon, StarIcon } from "lucide-react";
+import {
+    Box,
+    Card,
+    CardHeader,
+    Heading,
+    Text,
+    CardBody,
+    Image,
+    Flex,
+    Badge,
+    Skeleton,
+    Stack,
+    Button,
+} from "@chakra-ui/react";
+import { ClockIcon, StarIcon, TrashIcon } from "lucide-react";
 
-const BookMarksRecipeCard = ({ recipe, handler }) => {
+const BookMarksRecipeCard = ({ recipe, handler, onDelete }) => {
     const [imageError, setImageError] = useState(false);
 
-    const handleClick = ()=> {
+    const handleClick = () => {
         if (handler) {
             handler(recipe);
         }
-    }
+    };
+
+    const handleDelete = () => {
+        if (onDelete) {
+            onDelete(recipe);
+        }
+    };
 
     const handleImageError = () => {
         setImageError(true);
@@ -25,7 +40,7 @@ const BookMarksRecipeCard = ({ recipe, handler }) => {
         if (rating >= 3.0) return "yellow.500";
         return "orange.500";
     };
-    
+
     return (
         <Card
             data-testid="recipeCard"
@@ -101,10 +116,20 @@ const BookMarksRecipeCard = ({ recipe, handler }) => {
                     >
                         {recipe["Diet-type"]}
                     </Badge>
+
+                    {/* Delete Button */}
+                    <Button
+                        mt="3"
+                        colorScheme="red"
+                        leftIcon={<TrashIcon />}
+                        onClick={handleDelete}
+                    >
+                        Delete
+                    </Button>
                 </Stack>
             </CardBody>
         </Card>
     );
-}
+};
 
 export default BookMarksRecipeCard;

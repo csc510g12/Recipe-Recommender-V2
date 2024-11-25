@@ -6,12 +6,16 @@ import { useEffect, useState } from "react";
 import BookMarksRecipeList from "./BookMarksRecipeList";
 import { Heading, Flex, Button, Spacer } from "@chakra-ui/react"
 import recipeDB from "../apis/recipeDB";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const UserProfile = (props) => {
+    const [bookmarks, setBookmarks] = useState([]);
+    const { user } = useAuth0();
+
     useEffect(() => {
         const bks = recipeDB.get("/recipes/getBookmarks", {
             params: {
-                userName: localStorage.getItem("userName")
+                userName: user.nickname,
             }
         })
         bks.then(res => {
@@ -21,10 +25,11 @@ const UserProfile = (props) => {
             }
         })
     }, [])
-    const [bookmarks, setBookmarks] = useState([])
+
     const handleClick = () => {
         props.handleProfileView()
     }
+    
     return (
         <>
             <Flex >

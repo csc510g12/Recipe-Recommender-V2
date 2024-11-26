@@ -9,7 +9,7 @@ import random
 def get_csv_path(filename=''):
     return os.path.dirname(__file__).replace('Code\\chatbot', 'Data\\') + filename 
 
-bot_token = '8047457125:AAGn6jFUjw3pQT1Wi3AtVEJ59eHKtid61kw'
+bot_token = '7603581964:AAH-8X19Bof-j_EiN_3YvQ9LI7WcD24Oy4I'
 app = Application.builder().token(bot_token).build()
 recipe_df = pd.read_csv(get_csv_path('final_recipe_recommender.csv'))
 cuisine_df = pd.read_csv(get_csv_path('Cuisine.csv'))

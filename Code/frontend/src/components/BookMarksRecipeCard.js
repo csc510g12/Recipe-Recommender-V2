@@ -7,6 +7,7 @@ import {
     Text,
     CardBody,
     Image,
+    useToast,
     Flex,
     Badge,
     Skeleton,
@@ -14,9 +15,14 @@ import {
     Button,
 } from "@chakra-ui/react";
 import { ClockIcon, StarIcon, TrashIcon } from "lucide-react";
+import recipeDB from "../apis/recipeDB"; // Import API module required to access recipe DB
+import { useAuth0 } from "@auth0/auth0-react"; // Import Auth0 for user info
 
 const BookMarksRecipeCard = ({ recipe, handler, onDelete }) => {
     const [imageError, setImageError] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); // Loading state for delete
+    const toast = useToast(); // Toast notifications
+    const { user } = useAuth0(); // Get user info from Auth0
 
     const handleClick = () => {
         if (handler) {
@@ -24,9 +30,58 @@ const BookMarksRecipeCard = ({ recipe, handler, onDelete }) => {
         }
     };
 
-    const handleDelete = () => {
-        if (onDelete) {
-            onDelete(recipe);
+    const handleDelete = async () => {
+        if (!user) {
+            toast({
+                title: "User not logged in",
+                description: "Please log in to manage bookmarks",
+                status: "warning",
+                duration: 3000,
+                isClosable: true,
+            });
+            return;
+        }
+
+        setIsLoading(true); // Show loading state while deleting
+
+        try {
+            // Make API call to remove the recipe from bookmarks
+            await recipeDB.post("/recipes/removeRecipeFromProfile", {
+                userName: user.nickname, // Pass user identifier
+                recipe,
+            });
+
+            // toast({
+            //     title: "Recipe Removed",
+            //     description: "The recipe has been removed from your bookmarks.",
+            //     status: "success",
+            //     duration: 3000,
+            //     isClosable: true,
+            // });
+
+            // Trigger parent component's delete handler
+            if (onDelete) {
+                onDelete(recipe);
+            }
+
+            toast({
+                title: "Recipe Removed",
+                description: "The recipe has been removed from your bookmarks.",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+            });
+        } catch (error) {
+            console.error("Error removing recipe:", error);
+            toast({
+                title: "Error",
+                description: "Unable to remove recipe. Please try again later.",
+                status: "error",
+                duration: 3000,
+                isClosable: true,
+            });
+        } finally {
+            setIsLoading(false); // Reset loading state
         }
     };
 

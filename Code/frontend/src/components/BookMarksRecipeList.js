@@ -7,7 +7,7 @@ import { Avatar, Flex, Modal, ModalBody, ModalCloseButton, ModalOverlay, ModalHe
 import BookMarksRecipeCard from "./BookMarksRecipeCard";
 
 // component to handle all the recipes
-const BookMarksRecipeList = ({ recipes }) => {
+const BookMarksRecipeList = ({ recipes, currentUserName, onDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentRecipe, setCurrentRecipe] = useState({});
 
@@ -28,7 +28,12 @@ const BookMarksRecipeList = ({ recipes }) => {
       <Box borderRadius={"lg"} border="1px" boxShadow={"10px"} borderColor={"gray.100"} fontFamily="regular" m={10} width={"94%"} p={5}>
         <SimpleGrid spacing={5} templateColumns='repeat(auto-fill, minmax(250px, 1fr))'>
           {recipes.length !==0 ? recipes.map((recipe) => (
-            <BookMarksRecipeCard handler={handleViewRecipe} recipe={recipe} />
+            <BookMarksRecipeCard
+              handler={handleViewRecipe}
+              currentUserName ={currentUserName}
+              recipe={recipe}
+              onDelete={onDelete}
+            />
           )) : <Text data-testid="noResponseText" fontSize={"lg"} color={"gray"}>Searching for a recipe?</Text>}
         </SimpleGrid>
       </Box>

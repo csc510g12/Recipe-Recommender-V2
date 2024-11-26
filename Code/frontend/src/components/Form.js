@@ -24,6 +24,7 @@ class Form extends Component {
       cuisineState: 0,
       cuisine: "",
       maxTime: "", // New state for max time
+      type:"",
     };
   }
 
@@ -142,7 +143,8 @@ class Form extends Component {
       cuisine: document.getElementById("cuisine").value,
       email_id: document.getElementById("email_id").value,
       flag: document.getElementById("Send_email").checked,
-      TotalTimeInMins: document.getElementById("max_time").value, // Include max time
+      TotalTimeInMins: document.getElementById("max_time").value, 
+      type: document.getElementById("type").value
     };
     this.props.sendFormData(dict);
     console.log(dict);
@@ -216,6 +218,19 @@ class Form extends Component {
                 placeholder="Max Time (in minutes)"
                 onChange={(event) =>
                   this.setState({ maxTime: event.target.value })
+                }
+              />
+            </InputGroup>
+            <InputGroup variant={"filled"}>
+              <Input
+                data-testid="type"
+                type="string"
+                id="type"
+                color={"gray.500"}
+                size={"lg"}
+                placeholder="Vegetarian, Non-veg, Vegan"
+                onChange={(event) =>
+                  this.setState({ type: event.target.value })
                 }
               />
             </InputGroup>

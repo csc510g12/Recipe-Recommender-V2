@@ -152,6 +152,7 @@ export default class RecipesController {
             filters.Email = req.query.Email;
             filters.Flag = req.query.Flag;
             filters.maxTime = req.query.maxTime;
+            filters.type = req.query.type;
         }
 
         const { recipesList, totalNumRecipes } = await RecipesDAO.getRecipes({

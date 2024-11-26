@@ -159,10 +159,7 @@ export default class RecipesDAO {
             cursor = await recipes
                 .find(query)
                 .collation({ locale: "en", strength: 2 });
-                let newcursor = {
-
-                } 
-                console.log(cursor)
+                
         } catch (e) {
             console.error(`Unable to issue find command, ${e}`);
             return { recipesList: [], totalNumRecipess: 0 };
@@ -174,11 +171,10 @@ export default class RecipesDAO {
             const newreciplist = []
             let recipesList = []
             console.log(recipesList1)
+            console.log(filters)
             for(let i =0;i<recipesList1.length;i++){
-                if(recipesList1[i].TotalTimeInMins<=filters["maxTime"])
+                if(recipesList1[i].TotalTimeInMins<=filters["maxTime"] && recipesList1[i]["Diet-type"].toLowerCase()===filters["type"].toLowerCase())
                     newreciplist.push(recipesList1[i])
-
-                
             }
             recipesList=newreciplist
             const totalNumRecipes = await recipes.countDocuments(query);

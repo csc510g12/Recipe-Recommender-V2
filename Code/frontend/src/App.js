@@ -63,7 +63,8 @@ class App extends Component {
           Cuisine: formDict["cuisine"],
           Email: formDict["email_id"],
           Flag: formDict["flag"],
-          maxTime: formDict["TotalTimeInMins"]
+          maxTime: formDict["TotalTimeInMins"],
+          type: formDict["type"]
         },
       });
       this.setState({

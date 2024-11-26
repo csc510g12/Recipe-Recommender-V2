@@ -144,6 +144,7 @@ export default class RecipesDAO {
                 console.log(str);
                 query = { "Cleaned-Ingredients": { $regex: str } };
                 query["Cuisine"] = filters["Cuisine"];
+                // query["TotalTimeInMins"] = { $lte: filters["maxTime"] };
                 console.log(query);
                 var email = filters["Email"];
                 var flagger = filters["Flag"];
@@ -158,6 +159,10 @@ export default class RecipesDAO {
             cursor = await recipes
                 .find(query)
                 .collation({ locale: "en", strength: 2 });
+                let newcursor = {
+
+                } 
+                console.log(cursor)
         } catch (e) {
             console.error(`Unable to issue find command, ${e}`);
             return { recipesList: [], totalNumRecipess: 0 };
@@ -165,7 +170,17 @@ export default class RecipesDAO {
 
         const displayCursor = cursor.limit(recipesPerPage);
         try {
-            const recipesList = await displayCursor.toArray();
+            const recipesList1 = await displayCursor.toArray();
+            const newreciplist = []
+            let recipesList = []
+            console.log(recipesList1)
+            for(let i =0;i<recipesList1.length;i++){
+                if(recipesList1[i].TotalTimeInMins<=filters["maxTime"])
+                    newreciplist.push(recipesList1[i])
+
+                
+            }
+            recipesList=newreciplist
             const totalNumRecipes = await recipes.countDocuments(query);
 
             var str_mail = "";

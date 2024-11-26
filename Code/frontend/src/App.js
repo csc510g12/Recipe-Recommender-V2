@@ -52,6 +52,7 @@ class App extends Component {
       cuisine: formDict["cuisine"],
       email: formDict["email_id"],
       flag: formDict["flag"],
+      
     });
 
     // Fetch recipe data based on form input
@@ -62,6 +63,7 @@ class App extends Component {
           Cuisine: formDict["cuisine"],
           Email: formDict["email_id"],
           Flag: formDict["flag"],
+          maxTime: formDict["TotalTimeInMins"]
         },
       });
       this.setState({

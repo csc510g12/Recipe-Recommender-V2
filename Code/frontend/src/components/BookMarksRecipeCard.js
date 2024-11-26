@@ -40,6 +40,7 @@ const BookMarksRecipeCard = ({ recipe, handler, onDelete }) => {
         if (rating >= 3.0) return "yellow.500";
         return "orange.500";
     };
+   
 
     return (
         <Card
@@ -82,6 +83,8 @@ const BookMarksRecipeCard = ({ recipe, handler, onDelete }) => {
                     {recipe.TranslatedRecipeName}
                 </Heading>
             </CardHeader>
+
+            
 
             <CardBody pt="0">
                 <Stack spacing="3">
@@ -129,6 +132,7 @@ const BookMarksRecipeCard = ({ recipe, handler, onDelete }) => {
                 </Stack>
             </CardBody>
         </Card>
+        
     );
 };
 

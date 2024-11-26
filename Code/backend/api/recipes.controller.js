@@ -1,3 +1,4 @@
+import { request } from "express";
 import RecipesDAO from "../dao/recipesDAO.js";
 import axios from "axios";
 
@@ -143,12 +144,14 @@ export default class RecipesController {
 
         let filters = {};
         //Checking the query to find the required results
+        console.log(req.query)
 
         if (req.query.CleanedIngredients) {
             filters.CleanedIngredients = req.query.CleanedIngredients;
             filters.Cuisine = req.query.Cuisine;
             filters.Email = req.query.Email;
             filters.Flag = req.query.Flag;
+            filters.maxTime = req.query.maxTime;
         }
 
         const { recipesList, totalNumRecipes } = await RecipesDAO.getRecipes({

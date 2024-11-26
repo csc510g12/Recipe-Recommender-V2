@@ -63,3 +63,19 @@ def test_find_non_vegetarian_indian_recipe_with_chicken_max_time_5():
 def test_find_recipe_with_chicken():
     result = requests.get("http://localhost:1000/api/v1/recipes?CleanedIngredients=chicken").json()
     assert result['recipes'] != 0
+
+def test_find_recipe_with_milk_rice_and_egg():
+    result = requests.get("http://localhost:1000/api/v1/recipes?CleanedIngredients=milk,rice,egg").text
+    assert result.find("milk,rice") != -1
+
+def test_find_indian_vegetarian_and_vegan_recipe_with_paneer_max_time_50():
+    result = requests.get("http://localhost:1000/api/v1/recipes?CleanedIngredients=panner&Cuisine=Indian&maxTime=50&type=Vegetarian,vegan").json()
+    assert result['total_results'] > 50
+
+def test_validate_diet_type_in_non_vegetarian_recipe_with_chicken_max_time_40():
+    result = requests.get("http://localhost:1000/api/v1/recipes?CleanedIngredients=chicken&Cuisine=Indian&maxTime=40&type=Non-Vegetarian").json()
+    assert len(result['recipes'][0]['Diet-type']) != 0
+
+def test_validate_restaurant_location_in_non_vegetarian_recipe_with_chicken_max_time_50():
+    result = requests.get("http://localhost:1000/api/v1/recipes?CleanedIngredients=chicken&Cuisine=Indian&maxTime=50&type=Non-Vegetarian").json()
+    assert len(result['recipes'][0]['Restaurant-Location']) != 0

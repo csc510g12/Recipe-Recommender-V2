@@ -1,48 +1,29 @@
-name: Running Code Coverage
+name: Test API
 
 on: [push, pull_request]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
-    - name: Checkout repository
+    - name: Checkout Code
       uses: actions/checkout@v2
-      with:
-        fetch-depth: 2 
 
-    - name: Set up Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        node-version: ${{ matrix.node-version }}
-        
-    - name: Install Python 3.9.20
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.9.20
-    
-    - name: Install dependencies
+        python-version: '3.9'
+
+    - name: Install Dependencies
       run: |
-          pip install pytest-cov
-          pip install -r requirements.txt
-          echo requirements installed
-          cd Code/backend
-          npm install nodemailer
-          npm install
-          npx nodemon &
-          
-    - name: Run the tests
+        pip install -r requirements.txt
+
+    - name: Start API Server
       run: |
-          cd test
-          pytest --cov=./      
-          
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+        nohup python app.py & # Start the server in the background
+        sleep 5               # Wait for the server to start
+
+    - name: Run Tests
+      run: |
+        pytest --cov=./

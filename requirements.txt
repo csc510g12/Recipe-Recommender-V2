@@ -1,3 +1,5 @@
 requests~=2.22.0
 pandas
 python-telegram-bot
+pytest
+pytest-cov

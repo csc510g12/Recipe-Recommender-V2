@@ -2,11 +2,9 @@
 
 ![](Recipe_1.gif)
 
-## Deployed Link: https://reciperecommendationsystem.vercel.app/
-
 <br><br>
 ## Watch how our application works: 
-### Click here to watch - [Drive](https://go.ncsu.edu/uimnr6a) <br>
+### Click here to watch - [Drive](https://drive.google.com/file/d/1jFzHKE4TvadCJSLQ7Z1XGD1AoiM-CxZO/view?usp=sharing) <br>
 <br><br>
 
 [![Made With](https://img.shields.io/badge/made%20with-javascript-gree)](https://www.javascript.com/)
@@ -42,9 +40,11 @@ From personalized recommendations to a sleek, user-friendly design, Recipe Recom
 
 ## Feature additions: Enhancements, Upgrades and BugFixes:
 Presenting our latest additions: Here's a comprehensive list of all our new features, enhancements, and upgrades! <br>
-1. User Profile: Our application now features Single Sign-On (SSO) authentication, allowing you to log in seamlessly through your social media accounts or by creating a new account within our system. This streamlined authentication process not only enhances security but also provides personalized experiences and customized access to your preferences and activities. Further details will be discussed in the following points. Your profile, information, and preferred recipes are now conveniently located in a designated area, simplifying the management of all your content in one organized space.
-2. Refactoring the UI: We've eliminated inactive buttons and links, employing a technical process termed "system refactoring" to enhance functionality and optimize the user interface.
-3. Chatbot: We've introduced a Chatbot feature to enhance user engagement and make recipe discovery even more accessible. The chatbot serves as a virtual assistant, guiding you through various functionalities of our application directly from your messaging platform  
+1. Advanced Filter: Our application now features advanced filter feature for the recipes, allowing you to filter the recipes based on the time you have to prepare the meal and the dietary choices you have (vegetarian, non-vegetarian, vegan) allowing you to fit you schedule and dietary needs, while saving you time and effort.
+
+2. Calorie Count: This feature gives you a quick idea of the nutritional value of your meal, making it easier to plan meals that align with your health goals. Whether you’re tracking calories or just curious about the nutritional content of a dish, this feature has you covered.
+
+3. Enhanced BookMark Management: You can now delete bookmarks directly from the bookmarks page. Just navigate to your bookmarked recipes and remove any recipe with a single click. This improvement is all about convenience, helping you manage your saved recipes without unnecessary back-and-forth navigation.
 
 ### Interaction Flows for Chatbot
 
@@ -158,9 +158,9 @@ Check out our comprehensive YouTube video demonstrating each step for easy guida
 
 
 ## Release Made in this cycle <br>
-1. Major release 4.1 - Added SSO sign-in
-2. Major Release 4.2 - Chatbot Integration
-3. Major Release 4.3 - Major release- Included minor bug fixes and documentation updates<br>
+1. Major release 5.1 - Added new Advanced Filter Search
+2. Major Release 5.2 - Included calorie count for each individual serving
+3. Major Release 5.3 - Created a delete bookmark option directly in the book mark window<br>
 <br>
 
 
@@ -173,24 +173,24 @@ Check out our comprehensive YouTube video demonstrating each step for easy guida
 
 ## :page_facing_up: License <a name="License"></a>
 
-This project is licensed under the terms of the MIT license. Please check [License](https://github.com/PvPatel-1001/Recipe_Recommender/blob/master/LICENSE) for more details.
+This project is licensed under the terms of the MIT license. Please check [License](https://github.com/SE-Fall-2024-Team-69/RecipeRecommender/blob/master/LICENSE) for more details.
 
 ## :pencil2: Contributions <a name="Contributions"></a>
 
-Please see our [CONTRIBUTING.md](https://github.com/pnprathima/Recipe_Recommender/blob/master/CONTRIBUTING.md) for instructions on how to contribute to the project by completing some of the issues.
+Please see our [CONTRIBUTING.md](https://github.com/SE-Fall-2024-Team-69/RecipeRecommender/blob/master/CONTRIBUTING.md) for instructions on how to contribute to the project by completing some of the issues.
 
 ## FUTURE SCOPE
 
-1. Nutritional Info: Show calorie counts and nutrition facts for each recipe.
+1. Add scrapers: Retrieve recipes from already existing websites.
 2. Recipe Recommendations: Suggest similar recipes with a smart recommendation model.
 3. Ingredient Price Comparison: Link ingredients to compare prices across multiple websites.
 4. Smart Meal Planner: Automatically generate weekly meal plans and grocery lists based on user preferences and available ingredients.
 
 ## Team Members
 
-Saraogi, Devang <br>
-Behar, Snehil <br>
-Tandel, Om <br>
+Mullamuri, Venkata Yaswanth <br>
+Gupta, Ayush <br>
+Baddi, Yaswanth <br>
 
 ## Troubleshooting and Support
 Common issues observed and solutions:<br>

@@ -3,19 +3,26 @@ on:
   pull_request:
   push:
     branches:
-    - master
+      - master
 
 jobs:
   prettier:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        ref: ${{ github.head_ref }}
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
 
-    - name: Prettify code
-      uses: creyD/prettier_action@v4.0
-      with:
-        prettier_options: --write **/*.{js,md}
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Use an appropriate Node.js version
+
+      - name: Install Dependencies
+        run: npm install -g prettier
+
+      - name: Prettify Code
+        run: prettier --write "**/*.{js,md}"
+

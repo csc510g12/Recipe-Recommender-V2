@@ -22,12 +22,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Install Python 3.9.18
+    - name: Install Python 3.9.20
       uses: actions/setup-python@v1
       with:
-        python-version: 3.9.18
+        python-version: 3.9.20
     
     - name: Install dependencies
       run: |
@@ -43,8 +41,8 @@ jobs:
       run: |
           cd test
           pytest --cov=./      
+          
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
           token: ${{ secrets.CODECOV_TOKEN }}
-

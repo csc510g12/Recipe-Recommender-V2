@@ -133,4 +133,3 @@ Cheers! We look forward to collaborating with you.
 
 - [The atom repository](https://github.com/atom/atom/blob/master/CONTRIBUTING.md#pull-requests)
 - [PurpleBooth](https://gist.github.com/PurpleBooth/b24679402957c63ec426#scope)
-- [GitHub docs](https://github.com/github/docs/blob/main/CONTRIBUTING.md)

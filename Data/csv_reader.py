@@ -1,3 +1,7 @@
+# /* MIT License
+
+# Copyright (c) 2024 Ayush, Yaswanth B, Yaswant M  */
+
 import pandas as pd
 import random
 

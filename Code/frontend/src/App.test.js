@@ -1,3 +1,7 @@
+/* MIT License
+
+Copyright (c) 2024 Ayush, Yaswanth B, Yaswant M  */
+
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 

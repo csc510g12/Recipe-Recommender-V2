@@ -1,3 +1,7 @@
+/* MIT License
+
+Copyright (c) 2024 Ayush, Yaswanth B, Yaswant M  */
+
 import React, { Component } from "react";
 import { Tabs, Tab, TabList, TabPanel, TabPanels, Box, Text, Center } from "@chakra-ui/react";
 import { withAuth0 } from "@auth0/auth0-react";

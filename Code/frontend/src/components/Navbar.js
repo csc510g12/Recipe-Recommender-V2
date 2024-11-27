@@ -1,3 +1,6 @@
+/* MIT License
+
+Copyright (c) 2024 Ayush, Yaswanth B, Yaswant M  */
 'use client';
 
 import {

@@ -1,6 +1,6 @@
 /* MIT License
 
-Copyright (c) 2023 Pannaga Rao, Harshitha, Prathima, Karthik  */
+Copyright (c) 2024 Ayush, Yaswanth B, Yaswant M  */
 
 import { useEffect, useState } from "react";
 import BookMarksRecipeList from "./BookMarksRecipeList";

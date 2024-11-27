@@ -1,6 +1,8 @@
-/* MIT License
-
-Copyright (c) 2023 Pannaga Rao, Harshitha, Prathima, Karthik  */
+// Copyright (C) 2024 SE Recipe Recommender - All Rights Reserved
+// You may use, distribute and modify this code under the
+// terms of the MIT license.
+// You should have received a copy of the MIT license with
+// this file. If not, please write to: secheaper@gmail.com
 
 import React, { useState } from "react";
 import { Avatar, Flex, Modal, ModalBody, ModalCloseButton, ModalOverlay, ModalHeader, ModalFooter, ModalContent, Box, SimpleGrid, Text, Button } from "@chakra-ui/react"

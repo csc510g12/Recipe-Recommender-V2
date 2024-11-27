@@ -1,3 +1,7 @@
+/* MIT License
+
+Copyright (c) 2024 Ayush, Yaswanth B, Yaswant M  */
+
 import React from "react";
 import "../video.css";
 import VideoURL from "./VideoURL";

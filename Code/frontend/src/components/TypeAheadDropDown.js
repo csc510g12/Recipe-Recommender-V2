@@ -1,3 +1,7 @@
+/* MIT License
+
+Copyright (c) 2024 Ayush, Yaswanth B, Yaswant M  */
+
 import React from 'react';
 import { Input } from '@chakra-ui/react';
 import "./css/TypeAheadDropDown.css"

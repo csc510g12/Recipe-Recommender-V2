@@ -4,7 +4,7 @@ node_modules
 coverage
 package-lock.json
 
-*.env
+# *.env
 
 ### Node ###
 # Logs

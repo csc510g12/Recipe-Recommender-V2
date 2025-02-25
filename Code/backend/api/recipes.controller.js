@@ -144,22 +144,28 @@ export default class RecipesController {
 
         let filters = {};
         //Checking the query to find the required results
-        console.log(req.query)
+        console.log("REq query at api is ", req.query)
 
-        if (req.query.CleanedIngredients) {
-            filters.CleanedIngredients = req.query.CleanedIngredients;
+        // if (req.query.CleanedIngredients) {
+            // filters.CleanedIngredients = req.query.CleanedIngredients;
+            filters.CleanedIngredients = "Tomato";
             filters.Cuisine = req.query.Cuisine;
             filters.Email = req.query.Email;
             filters.Flag = req.query.Flag;
             filters.maxTime = req.query.maxTime;
             filters.type = req.query.type;
-        }
+        // }
+
+        console.log("\n\nFilter at api layer is ", filters);
 
         const { recipesList, totalNumRecipes } = await RecipesDAO.getRecipes({
             filters,
             page,
             recipesPerPage,
         });
+
+        console.log("/n/n/n/nrecipesList: ", recipesList);
+        console.log("/n/n/n/n");
 
         let response = {
             recipes: recipesList,
@@ -261,4 +267,40 @@ export default class RecipesController {
             });
         }
     }
+
+
+    static async apiGetGroceryList(req, res) {
+        const { userName } = req.query;
+
+        if (!userName) {
+            return res.status(400).json({ message: "Username is required" });
+        }
+    
+        try {
+            const groceryList = await RecipesDAO.getGroceryList(userName);
+            res.json({ groceryList });
+        } catch (error) {
+            console.error(`Error in apiGenerateGroceryList:`, error);
+            res.status(500).json({ message: "Internal server error", error: error.message });
+        }
+
+
+        // const userName = req.query.userName;
+        // if (!userName) {
+        //     return res.status(400).json({ message: "Username is required" });
+        // }
+
+        // try {
+        //     const response = await RecipesDAO.getGroceryList(userName);
+        //     if (response.success) {
+        //         res.json({ groceryList: response.groceryList });
+        //     } else {
+        //         res.status(500).json({ error: response.error });
+        //     }
+        // } catch (error) {
+        //     console.error("Error generating grocery list:", error);
+        //     res.status(500).json({ message: "Failed to generate grocery list" });
+        // }
+    }
+    
 }

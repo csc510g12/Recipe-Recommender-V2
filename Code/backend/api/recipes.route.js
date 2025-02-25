@@ -30,5 +30,7 @@ router.route("/generateRecipe").post(RecipesCtrl.apiGenerateRecipe);
 
 router.route("/oAuthLogin").post(RecipesCtrl.apiOAuthLogin);
 
+router.route("/getGroceryList").get(RecipesCtrl.apiGetGroceryList);
+
 
 export default router;

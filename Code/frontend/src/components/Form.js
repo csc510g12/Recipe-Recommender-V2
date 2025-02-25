@@ -51,21 +51,15 @@ class Form extends Component {
           "Mediterranean",
           "Middle East",
           "Italian",
-          "Korean",
           "Continental",
-          "Greek",
           "Latin",
           "American",
           "Other",
           "Swedish",
           "Latvian",
-          "Italian",
           "Spanish",
-          "American",
           "Scottish",
           "British",
-          "Thai",
-          "Japanese",
           "Indian",
           "Canadian",
           "Russian",
@@ -107,6 +101,7 @@ class Form extends Component {
     const list_items = items.map((item) => (
       <Badge
         id={item}
+        key={item}
         m={1}
         _hover={{ cursor: "pointer" }}
         onClick={this.removeHandler}
@@ -154,8 +149,8 @@ class Form extends Component {
     };
     this.props.sendFormData(dict);
     console.log(dict);
-    document.getElementById("cuisine").value = "";
-    document.getElementById("email_id").value = "";
+    // document.getElementById("cuisine").value = "";
+    // document.getElementById("email_id").value = "";
     
   };
 
@@ -180,7 +175,7 @@ class Form extends Component {
             </Text>
             <InputGroup variant={"filled"} zIndex={+2}>
               <TypeAheadDropDown
-                iteams={this.state.ingredient_list}
+                items={this.state.ingredient_list}
                 placeholder_inp={"Ingredients"}
                 id_inp={"ingredient"}
               />
@@ -193,7 +188,7 @@ class Form extends Component {
             <HStack direction="row">{this.printHandler()}</HStack>
             <InputGroup variant={"filled"} zIndex={+1}>
               <TypeAheadDropDown
-                iteams={this.state.cuisine_list}
+                items={this.state.cuisine_list}
                 placeholder_inp={"Cuisine"}
                 id_inp={"cuisine"}
               />

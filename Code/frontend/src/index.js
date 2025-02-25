@@ -13,20 +13,24 @@ import axios from 'axios';
 
 const root = createRoot(document.getElementById('root'));
 
-const RegisterUser = () => {
-  const user = JSON.parse(localStorage.getItem('user'));
-  console.log(user);
+/*
+* Commented the function because JWT auth was replaced by OAuth systems in previous version
+*/
 
-  const registerUser = async () => {
-    await axios.post('http://localhost:1000/api/v1/recipes/auth/oAuthLogin', {
-      userName: user.name,
-      email: user.email,
-    });
-  };
-  registerUser();
-  window.location.href = window.location.origin;
-  return null;
-};
+// const RegisterUser = () => {
+//   const user = JSON.parse(localStorage.getItem('user'));
+//   console.log(user);
+
+//   const registerUser = async () => {
+//     await axios.post('http://localhost:1000/api/v1/recipes/auth/oAuthLogin', {
+//       userName: user.name,
+//       email: user.email,
+//     });
+//   };
+//   registerUser();
+//   window.location.href = window.location.origin;
+//   return null;
+// };
 
 root.render(
   <ChakraProvider>

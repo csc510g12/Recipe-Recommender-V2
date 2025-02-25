@@ -18,12 +18,12 @@ export default class TypeAheadDropDown extends React.Component {
  
  onTextChange = (e) => {
     try{
-        const {iteams} = this.props;
+        const {items} = this.props;
         let suggestions = [];
         const value = e.target.value;
         if (value.length > 0) {
             const regex = new RegExp(`^${value}`, `i`);
-            suggestions = iteams.sort().filter(v => regex.test(v));
+            suggestions = items.sort().filter(v => regex.test(v));
         }
 
 

@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const registerUser = async (user) => {
   try {
-    await axios.post('http://localhost:1000/api/v1/recipes/auth/oAuthLogin', {
+    await axios.post('http://localhost:1000/api/v1/recipes/oAuthLogin', {
       userName: user.name,
       email: user.email,
     });

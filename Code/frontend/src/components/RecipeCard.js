@@ -22,7 +22,7 @@ import { ClockIcon, StarIcon, BookmarkIcon } from "lucide-react";
 import recipeDB from "../apis/recipeDB";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const RecipeCard = ({ recipe, handler }) => {
+const RecipeCard = ({key, recipe, handler }) => {
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
   const [isLoading, setIsLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -31,8 +31,7 @@ const RecipeCard = ({ recipe, handler }) => {
 
   useEffect(() => {
     const fetchBookmarkedRecipes = async () => {
-      if (!isAuthenticated || !user) return;
-
+      // if (!isAuthenticated || !user) return;
       try {
         const { data } = await recipeDB.get(`/recipes/getBookmarkedRecipes`, {
           params: { userName: user.nickname },
@@ -49,7 +48,7 @@ const RecipeCard = ({ recipe, handler }) => {
     };
 
     fetchBookmarkedRecipes();
-  }, [recipe._id, isAuthenticated, user]);
+  }, [key]);
 
   const handleClick = () => {
     if (handler) {

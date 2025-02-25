@@ -37,7 +37,7 @@ class App extends Component {
     this.setState({
       userData: {}
     });
-    localStorage.removeItem("userName");
+    localStorage.removeItem("user");
     alert("Successfully logged out!");
   }
 
@@ -56,21 +56,25 @@ class App extends Component {
       cuisine: formDict["cuisine"],
       email: formDict["email_id"],
       flag: formDict["flag"],
+      recipeList: []
       
     });
 
     // Fetch recipe data based on form input
     try {
+      var params = {
+        CleanedIngredients: Array.from(formDict["ingredient"]),
+        Cuisine: formDict["cuisine"],
+        Email: formDict["email_id"],
+        Flag: formDict["flag"],
+        maxTime: formDict["TotalTimeInMins"],
+        type: formDict["type"]
+      }
+
       const response = await recipeDB.get("/recipes", {
-        params: {
-          CleanedIngredients: Array.from(formDict["ingredient"]),
-          Cuisine: formDict["cuisine"],
-          Email: formDict["email_id"],
-          Flag: formDict["flag"],
-          maxTime: formDict["TotalTimeInMins"],
-          type: formDict["type"]
-        },
+        params,
       });
+
       this.setState({
         recipeList: response.data.recipes,
         isLoading: false
@@ -114,21 +118,24 @@ class App extends Component {
   registerUser = async () => {
     const { user } = this.props.auth0;
     if (!user) return;
-    try {
-      const response = await recipeDB.post("recipes/oAuthLogin", { email: user.nickname });
-      if (response.data.success) {
-        this.setState({ userData: response.data.user });
-      } else {
-        console.error("Failed to register user");
-      }
-    } catch (err) {
-    }
+
+    /* This is the part causing errors as outlined in Issue 3. The API awaits indefinitely due to some issue in REST structure */
+
+    // try {
+    //   const response = await recipeDB.post("recipes/oAuthLogin", { email: user.nickname });
+    //   if (response.data.success) {
+    //     this.setState({ userData: response.data.user });
+    //   } else {
+    //     console.error("Failed to register user");
+    //   }
+    // } catch (err) {
+    // }
   };
 
   render() {
+    this.registerUser();
     const { isAuthenticated, user } = this.props.auth0;
     const { isProfileView, recipeList, recipeByNameList, isLoading, userData } = this.state;
-    this.registerUser();
     return (
       <div>
         <Nav 

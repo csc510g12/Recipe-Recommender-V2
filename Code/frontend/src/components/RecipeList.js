@@ -68,6 +68,7 @@ const RecipeList = ({ recipes }) => {
           {recipes.length !== 0 ? (
             recipes.map((recipe) => (
               <RecipeCard
+                key={recipe._id}
                 handler={handleViewRecipe}
                 recipe={{
                   ...recipe,

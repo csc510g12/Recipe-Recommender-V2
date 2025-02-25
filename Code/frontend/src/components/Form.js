@@ -154,6 +154,27 @@ class Form extends Component {
     
   };
 
+  handleGenerateRecipe = async () => {
+    const { ingredients, cuisine, maxTime, type } = this.state;
+    const ingredientArray = Array.from(ingredients);
+
+    try {
+      const response = await recipeDB.post("/recipes/generateRecipe", {
+        ingredients: ingredientArray,
+        cuisine,
+        maxTime,
+        type,
+      });
+
+      if (response.data) {
+        console.log("Generated Recipe:", response.data);
+      }
+    } catch (error) {
+      console.error("Error generating recipe:", error);
+    }
+  };
+
+
   render() {
     return (
       <>

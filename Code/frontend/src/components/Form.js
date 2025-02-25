@@ -235,17 +235,10 @@ class Form extends Component {
                 }
               />
             </InputGroup>
-            <Button
-              data-testid="submit"
-              id="submit"
-              onClick={this.handleSubmit}
-              width={"100%"}
-              _hover={{ bg: "black", color: "gray.100" }}
-              color={"gray.600"}
-              bg={"green.300"}
-            >
-              Search Recipes
-            </Button>
+            <HStack width="100%" spacing={4}>
+            <Button data-testid="submit" onClick={this.handleSubmit} flex={1} _hover={{ bg: "black", color: "gray.100" }} color="gray.600" bg="green.300">Search Recipes</Button>
+            <Button data-testid="generate" onClick={this.handleGenerateRecipe} flex={1} _hover={{ bg: "black", color: "gray.100" }} color="gray.600" bg="green.300">Generate Recipe</Button>
+          </HStack>
           </VStack>
         </Box>
       </>

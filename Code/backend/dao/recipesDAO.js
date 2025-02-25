@@ -136,7 +136,6 @@ export default class RecipesDAO {
         if (filters) {
             if ("CleanedIngredients" in filters) {
                 var str = "(?i)";
-
                 for (var i = 0; i < filters["CleanedIngredients"].length; i++) {
                     const str1 = filters["CleanedIngredients"][i];
                     str += "(?=.*" + str1 + ")";
@@ -152,6 +151,8 @@ export default class RecipesDAO {
                 console.log(flagger);
             }
         }
+
+        // console.log("\n\n\nFilters in the DAO controller are: ", filters)
 
         let cursor;
 
@@ -173,8 +174,8 @@ export default class RecipesDAO {
             console.log(recipesList1)
             console.log(filters)
             for(let i =0;i<recipesList1.length;i++){
-                if(recipesList1[i].TotalTimeInMins<=filters["maxTime"] && recipesList1[i]["Diet-type"].toLowerCase()===filters["type"].toLowerCase())
-                    newreciplist.push(recipesList1[i])
+                // if(recipesList1[i].TotalTimeInMins<=filters["maxTime"] && recipesList1[i]["Diet-type"].toLowerCase()===filters["type"].toLowerCase())
+                newreciplist.push(recipesList1[i])
             }
             recipesList=newreciplist
             const totalNumRecipes = await recipes.countDocuments(query);

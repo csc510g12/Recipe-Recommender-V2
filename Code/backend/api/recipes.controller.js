@@ -137,6 +137,7 @@ export default class RecipesController {
     }
 
     static async apiGetRecipes(req, res, next) {
+        // console.log("Is anyone even reaching here!????")
         const recipesPerPage = req.query.recipesPerPage
             ? parseInt(req.query.recipesPerPage, 10)
             : 20;
@@ -146,14 +147,16 @@ export default class RecipesController {
         //Checking the query to find the required results
         console.log(req.query)
 
-        if (req.query.CleanedIngredients) {
-            filters.CleanedIngredients = req.query.CleanedIngredients;
-            filters.Cuisine = req.query.Cuisine;
-            filters.Email = req.query.Email;
-            filters.Flag = req.query.Flag;
-            filters.maxTime = req.query.maxTime;
-            filters.type = req.query.type;
-        }
+        // if (req.query.CleanedIngredients) {
+        filters.CleanedIngredients = req.query.CleanedIngredients;
+        filters.Cuisine = req.query.Cuisine;
+        filters.Email = req.query.Email;
+        filters.Flag = req.query.Flag;
+        filters.maxTime = req.query.maxTime;
+        filters.type = req.query.type;
+        // }
+
+        // console.log("Filters are: \n\n\n\n", filters)
 
         const { recipesList, totalNumRecipes } = await RecipesDAO.getRecipes({
             filters,

@@ -271,6 +271,7 @@ export default class RecipesController {
 
     static async apiGetGroceryList(req, res) {
         const { userName } = req.query;
+        console.log("\n\n started apiGetGroceryList");
 
         if (!userName) {
             return res.status(400).json({ message: "Username is required" });
@@ -284,23 +285,6 @@ export default class RecipesController {
             res.status(500).json({ message: "Internal server error", error: error.message });
         }
 
-
-        // const userName = req.query.userName;
-        // if (!userName) {
-        //     return res.status(400).json({ message: "Username is required" });
-        // }
-
-        // try {
-        //     const response = await RecipesDAO.getGroceryList(userName);
-        //     if (response.success) {
-        //         res.json({ groceryList: response.groceryList });
-        //     } else {
-        //         res.status(500).json({ error: response.error });
-        //     }
-        // } catch (error) {
-        //     console.error("Error generating grocery list:", error);
-        //     res.status(500).json({ message: "Failed to generate grocery list" });
-        // }
     }
     
 }

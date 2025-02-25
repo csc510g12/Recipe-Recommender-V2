@@ -15,6 +15,8 @@ import UserProfile from "./components/UserProfile.js";
 import LoginButton from './components/LoginButton';
 import Nav from "./components/Navbar.js";
 
+import GroceryList from "./components/GroceryList";
+
 class App extends Component {
   constructor() {
     super();
@@ -23,6 +25,7 @@ class App extends Component {
       ingredients: new Set(),
       recipeList: [],
       recipeByNameList: [],
+      groceryList: [],
       email: "",
       flag: false,
       isLoading: false,
@@ -125,9 +128,61 @@ class App extends Component {
     }
   };
 
+  handleGetGroceryList = async () => {
+    this.setState({ isLoading: true });
+  
+    const { user } = this.props.auth0;
+    const userName = user?.nickname || this.state.userData?.nickname; // Get username
+    console.log("Username got is :", userName); // Debug log
+  
+    if (!userName) {
+      console.error("No username found for fetching grocery list.");
+      this.setState({ isLoading: false });
+      return;
+    }
+
+  
+    try {
+      const response = await recipeDB.get("/recipes/getGroceryList", {
+        params: { userName , timestamp: new Date().getTime(),}, // Pass the username
+      });
+  
+      console.log("Fetched Grocery List:", response.data); // Debug log
+  
+      this.setState({
+        groceryList: response.data.groceryList || [],
+        isLoading: false,
+      });
+    } catch (err) {
+      console.error("Error fetching grocery list:", err);
+      this.setState({ isLoading: false });
+    }
+  };
+  
+
+
+  // handleGetGroceryList = async () => {
+  //   this.setState({ isLoading: true });
+
+  //   try {
+  //     const response = await recipeDB.get("/recipes/getGroceryList", {
+  //       params: { email: this.state.email },
+  //     });
+
+  //     this.setState({
+  //       groceryList: response.data.groceries || [],
+  //       isLoading: false,
+  //     });
+  //   } catch (err) {
+  //     console.error("Error fetching grocery list:", err);
+  //     this.setState({ isLoading: false });
+  //   }
+  // };
+  
+
   render() {
     const { isAuthenticated, user } = this.props.auth0;
-    const { isProfileView, recipeList, recipeByNameList, isLoading, userData } = this.state;
+    const { isProfileView, recipeList, recipeByNameList, groceryList, isLoading, userData } = this.state;
     this.registerUser();
     return (
       <div>
@@ -153,6 +208,7 @@ class App extends Component {
                   <Tab>Search Recipe</Tab>
                   <Tab>Add Recipe</Tab>
                   <Tab>Search Recipe By Name</Tab>
+                  <Tab>Grocery List</Tab> 
                 </TabList>
                 <TabPanels>
                   <TabPanel>
@@ -168,6 +224,14 @@ class App extends Component {
                   <TabPanel>
                     <SearchByRecipe sendRecipeData={this.handleRecipesByName} />
                     {isLoading ? <RecipeLoading /> : <RecipeList recipes={recipeByNameList} />}
+                  </TabPanel>
+                  <TabPanel>
+                    <Box textAlign="center" mb={4}>
+                      <button onClick={this.handleGetGroceryList} style={{ padding: "10px 20px", backgroundColor: "#4CAF50", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}>
+                        Fetch Grocery List
+                      </button>
+                    </Box>
+                    <GroceryList groceryList={this.state.groceryList} fetchGroceryList={this.handleGetGroceryList} />
                   </TabPanel>
                 </TabPanels>
               </Tabs>

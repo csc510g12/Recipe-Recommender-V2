@@ -129,7 +129,7 @@ class Form extends Component {
       },
       () => console.log(this.state)
     );
-    document.getElementById("ingredient").value = "";
+    // document.getElementById("ingredient").value = "";
   };
 
   removeHandler = (event) => {
@@ -219,7 +219,7 @@ class Form extends Component {
                 id_inp={"ingredient"}
               />
               <InputRightElement>
-                <Button mt={2} mr={2} onClick={this.addHandler}>
+                <Button mt={2} mr={2} onClick={this.addHandler} data-testid='add-btn'>
                   Add
                 </Button>
               </InputRightElement>
@@ -245,7 +245,7 @@ class Form extends Component {
             <InputGroup variant={"filled"}>
               <FormLabel htmlFor="email-alerts" mb="0">
                 Enable email alert?
-                <Switch ml={2} id="Send_email" name="email" size="md" />
+                <Switch ml={2} id="Send_email" name="email" size="md" data-testid='email-switch' />
               </FormLabel>
             </InputGroup>
             <InputGroup variant={"filled"}>

@@ -4,6 +4,26 @@ import axios from "axios";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const defaultPassword = 'password';
+
+function parseJSON(rawInput) {
+    // Extract the content between the first and last triple backticks
+    const jsonPattern = /```json\s*([\s\S]*?)```/;
+    const match = rawInput.match(jsonPattern);
+    
+    if (match && match[1]) {
+      // Parse the extracted JSON string
+      try {
+        const parsedData = JSON.parse(match[1]);
+        return parsedData;
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+        return null;
+      }
+    } else {
+      console.error("No JSON content found between backticks");
+      return null;
+    }
+  }
 export default class RecipesController {
     static async apiOAuthLogin(req, res) {
         console.log("received request for oauth login");
@@ -208,12 +228,19 @@ export default class RecipesController {
     
     static async apiGenerateRecipe(req, res) {
         const { ingredients, cuisineFromForm, maxTime, type } = req.body;
-        // console.log("rq body: ", req.body);
-
-        if (!ingredients.length > 0) {
+    
+        if (!ingredients || !ingredients.length) {
             return res.status(400).json({ message: "Recipe ingredients are required" });
         }
-
+        
+        // Check if API key is available
+        if (!process.env.GEMINI_API_KEY) {
+            return res.status(500).json({ 
+                message: "Failed to generate response",
+                error: "API key is missing" 
+            });
+        }
+    
         try {
             let prompt = `Generate a recipe in JSON format with this structure:
             {
@@ -222,7 +249,7 @@ export default class RecipesController {
             "ingredients": ["list", "of", "ingredients"],
             "instructions": ["step 1", "step 2", "step 3"]
             }
-
+    
             Requirements:
             1. Ingredients must be an array of strings with exact measurements (e.g., "1 cup flour")
             2. Instructions must be a numbered array of detailed steps
@@ -230,12 +257,12 @@ export default class RecipesController {
             4. Never use markdown formatting
             5. Include essential cooking techniques and temperatures
             6. Do not include the initial json structure in the response, just start with the curly brackets
-
+    
             Base the recipe on these ingredients: ${ingredients.join(", ")}
             ${cuisineFromForm ? `Cuisine style: ${cuisineFromForm}` : ''}
             ${type ? `Dietary requirements: ${type}` : ''}
             ${maxTime ? `Maximum cooking time: ${maxTime} minutes` : ''}
-
+    
             Example response:
             {
             "name": "Vegetarian Lentil Bolognese",
@@ -250,26 +277,40 @@ export default class RecipesController {
                 "Heat oil in pan over medium heat..."
             ]
             }
-
+    
             ONLY RETURN VALID JSON WITHOUT MARKDOWN WRAPPING OR ADDITIONAL TEXT`;
-
-            console.log("Prompt: ", prompt);
-
-            const genAI = new GoogleGenerativeAI("AIzaSyCYbwgMdaBbkK6XFssMpBjCOqFkQUqu40U");
+    
+            const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
             const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
+    
             const result = await model.generateContent(prompt);
-
-            console.log("Result: ", result.response.text().slice(7,-3));
-            const recipeData = JSON.parse(result.response.text().slice(7,-3));
-
-            // console.log("my recipe: ", recipeData);
-            res.json({ generatedRecipe: recipeData });
+    
+            if (!result || !result.response) {
+                throw new Error("Failed to generate response");
+            }
+        
+            // Get the text response
+            const responseText = result.response.text();
+            
+            // Try to parse the JSON directly first (for test compatibility)
+            try {
+                const recipeData = JSON.parse(responseText);
+                return res.json({ generatedRecipe: recipeData });
+            } catch (parseError) {
+                // If direct parsing fails, try the markdown extraction method
+                const recipeData = parseJSON(responseText);
+                
+                if (!recipeData) {
+                    throw new Error("Failed to parse recipe data");
+                }
+                
+                return res.json({ generatedRecipe: recipeData });
+            }
         } catch (error) {
-            console.error("Error generating response:", error.response?.data || error.message);
-            res.status(500).json({ 
+            console.error("Error generating response:", error.message);
+            return res.status(500).json({ 
                 message: "Failed to generate response",
-                error: error.response?.data || error.message 
+                error: error.message 
             });
         }
     }

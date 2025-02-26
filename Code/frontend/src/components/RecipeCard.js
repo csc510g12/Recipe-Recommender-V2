@@ -64,6 +64,7 @@ const RecipeCard = ({key, recipe, handler }) => {
         status: "warning",
         duration: 3000,
         isClosable: true,
+        position:"top-center"
       });
       loginWithRedirect();
       return;
@@ -85,6 +86,7 @@ const RecipeCard = ({key, recipe, handler }) => {
           status: "success",
           duration: 3000,
           isClosable: true,
+          position:"top-center"
         });
       } else {
         await recipeDB.post("/recipes/removeRecipeFromProfile", {
@@ -98,6 +100,7 @@ const RecipeCard = ({key, recipe, handler }) => {
           status: "success",
           duration: 3000,
           isClosable: true,
+          position:"top-center"
         });
       }
     } catch (error) {

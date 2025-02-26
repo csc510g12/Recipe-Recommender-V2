@@ -32,13 +32,11 @@ def test_grocery_list_contains_items():
 
     print("json_data is ", json_data)
     
-    # Check if "groceryList" is present in the response
     assert "groceryList" in json_data
     grocery_list = json_data["groceryList"]
     grocery_list = ["tomato","basmati rice","gram garlic ground paste","salt","hung curd (greek yogurt)","coriander (dhania) leaves","mint leaves (pudina)","ghee","gram ginger ground paste","red chilli powder","green chillies the center","onion","chicken","coriander powder","turmeric powder","garam masala powder","sunflower oil"]
     
     
-    # Ensure it's a list and contains expected items
     assert isinstance(grocery_list, list)
     assert "tomato" in grocery_list
     assert "salt" in grocery_list
@@ -46,12 +44,12 @@ def test_grocery_list_contains_items():
 
 def test_invalid_username():
     response = requests.get(f"{BASE_URL}/recipes/getGroceryList", params={"userName": "unknown_user"})
-    assert response.status_code not in [200]  # Depending on how your backend handles this
+    assert response.status_code not in [200] 
 
 
 def test_no_username():
     response = requests.get(f"{BASE_URL}/recipes/getGroceryList")
-    assert response.status_code == 400  # Should return an error if no username is provided
+    assert response.status_code == 400
 
 
 @pytest.mark.parametrize("ingredient", [
@@ -166,13 +164,6 @@ def test_grocery_list_api_failure():
         response = None
 
     assert response is None, "The API did not handle request failure properly."
-
-
-
-
-
-
-# ------------------------------------------------------
 
 
 def test_empty_grocery_list_for_new_user():

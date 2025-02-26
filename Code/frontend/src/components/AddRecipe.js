@@ -287,9 +287,9 @@ const AddRecipe = () => {
               {locationPrintHandler()}
             </InputGroup>
           </HStack>
-          <Button width="30%" m="auto" onClick={handleGenerateRecipe} _hover={{ bg: "black", color: "gray.100" }} color="gray.600" bg="green.300" isDisabled={isGenerating}>
+          {/* <Button width="30%" m="auto" onClick={handleGenerateRecipe} _hover={{ bg: "black", color: "gray.100" }} color="gray.600" bg="green.300" isDisabled={isGenerating}>
             Generate Recipe
-          </Button>
+          </Button> */}
           <Textarea value={recipe.instructions} onChange={handleChange} id="instructions" placeholder={"Write Cooking Instructions Here"} />
           <Button width={"30%"} m={'auto'} id="addRecipeButton" onClick={addRecipe} _hover={{ bg: 'black', color: "gray.100" }} color={"gray.600"} bg={"green.300"}>
             Add Recipe

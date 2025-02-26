@@ -30,5 +30,6 @@ router.route("/generateRecipe").post(RecipesCtrl.apiGenerateRecipe);
 
 router.route("/oAuthLogin").post(RecipesCtrl.apiOAuthLogin);
 
+router.route("/aiChef").post(RecipesCtrl.apiAiChef);
 
 export default router;

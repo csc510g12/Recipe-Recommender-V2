@@ -24,7 +24,7 @@ import { ClockIcon, StarIcon, TrashIcon } from "lucide-react";
 import recipeDB from "../apis/recipeDB"; // Import API module required to access recipe DB
 import { useAuth0 } from "@auth0/auth0-react"; // Import Auth0 for user info
 
-const BookMarksRecipeCard = ({ recipe, handler, onDelete }) => {
+const BookMarksRecipeCard = ({key, recipe, handler, onDelete }) => {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Loading state for delete
   const toast = useToast(); // Toast notifications

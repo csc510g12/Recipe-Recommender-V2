@@ -5,19 +5,30 @@
 // this file. If not, please write to: secheaper@gmail.com
 
 import React, { useState } from "react";
-import { Avatar, Flex, Modal, ModalBody, ModalCloseButton, ModalOverlay, ModalHeader, ModalFooter, ModalContent, Box, SimpleGrid, Text, Button } from "@chakra-ui/react"
+import { Avatar, Flex, Modal, ModalBody, ModalCloseButton, ModalOverlay, ModalHeader, ModalFooter, ModalContent, Box, SimpleGrid, Text, Button,
+  Heading,
+  InputGroup,
+  Input,
+  InputRightElement,
+  VStack,
+  Divider
+ } from "@chakra-ui/react"
 import BookMarksRecipeCard from "./BookMarksRecipeCard";
+import {FaPaperPlane} from "react-icons/fa"
 
 // component to handle all the recipes
 const BookMarksRecipeList = ({ recipes, currentUserName, onDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentRecipe, setCurrentRecipe] = useState({});
+  const [aiPrompt, setAiPrompt] = useState("");
+  const [aiResponse, setAiResponse] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   var youtube_videos = "https://www.youtube.com/results?search_query=" + currentRecipe["TranslatedRecipeName"];
   
   const handleViewRecipe = (data) => {
     setIsOpen(true)
-    console.log(data)
+    setAiResponse("");
     setCurrentRecipe(data);
   }
 
@@ -31,9 +42,9 @@ const BookMarksRecipeList = ({ recipes, currentUserName, onDelete }) => {
         <SimpleGrid spacing={5} templateColumns='repeat(auto-fill, minmax(250px, 1fr))'>
           {recipes.length !==0 ? recipes.map((recipe) => (
             <BookMarksRecipeCard
-              handler={handleViewRecipe}
-              currentUserName ={currentUserName}
+              key={recipe._id}
               recipe={recipe}
+              handler={handleViewRecipe}
               onDelete={onDelete}
             />
           )) : <Text data-testid="noResponseText" fontSize={"lg"} color={"gray"}>Searching for a recipe?</Text>}

@@ -1,6 +1,7 @@
 import { request } from "express";
 import RecipesDAO from "../dao/recipesDAO.js";
 import axios from "axios";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const defaultPassword = 'password';
 export default class RecipesController {
@@ -261,6 +262,48 @@ export default class RecipesController {
             res.status(500).json({ 
                 message: "Failed to generate recipe",
                 error: error.response?.data || error.message 
+            });
+        }
+    }
+
+    static async apiAiChef(req, res) {
+
+        if (req.method !== 'POST') {
+            return res.status(405).json({ message: 'Method not allowed' });
+        }
+
+        console.log("Lemme see what I can do!")
+
+        try {
+            const { recipeName, instructions, dietType, query } = req.body.context;
+            
+            // Initialize the Gemini API client
+            const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+            const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+            
+            // Format the prompt with recipe context
+            const prompt = `
+              As an AI chef, please provide substitution advice for the following recipe:
+              
+              Recipe: ${recipeName}
+              Diet Type: ${dietType}
+              Instructions: ${instructions}
+              
+              User's Question: ${query}
+              
+              Provide helpful, specific substitution advice considering the recipe's flavors and dietary needs.
+            `;
+            
+            // Generate content from Gemini
+            const result = await model.generateContent(prompt);
+            const response = result.response.text();
+            
+            return res.status(200).json({ response });
+          } catch (error) {
+            console.error('Error calling Gemini API:', error);
+            return res.status(500).json({ 
+              message: 'Failed to get AI suggestions',
+              error: error.message 
             });
         }
     }

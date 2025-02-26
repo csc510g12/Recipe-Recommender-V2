@@ -359,4 +359,22 @@ export default class RecipesController {
             });
         }
     }
+
+    static async apiGetGroceryList(req, res) {
+        const { userName } = req.query;
+        console.log("\n\n started apiGetGroceryList");
+
+        if (!userName) {
+            return res.status(400).json({ message: "Username is required" });
+        }
+
+        try {
+            const groceryList = await RecipesDAO.getGroceryList(userName);
+            res.json({ groceryList });
+        } catch (error) {
+            console.error(`Error in apiGenerateGroceryList:`, error);
+            res.status(500).json({ message: "Internal server error", error: error.message });
+        }
+
+    }
 }

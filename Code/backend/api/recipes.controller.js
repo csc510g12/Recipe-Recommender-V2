@@ -146,7 +146,7 @@ export default class RecipesController {
 
         let filters = {};
         //Checking the query to find the required results
-        console.log(req.query)
+        console.log("REq query at api is ", req.query)
 
         // if (req.query.CleanedIngredients) {
         filters.CleanedIngredients = req.query.CleanedIngredients;
@@ -164,6 +164,9 @@ export default class RecipesController {
             page,
             recipesPerPage,
         });
+
+        console.log("/n/n/n/nrecipesList: ", recipesList);
+        console.log("/n/n/n/n");
 
         let response = {
             recipes: recipesList,

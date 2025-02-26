@@ -23,8 +23,10 @@ function test_connectivity_func() {
   // Connection URI. Update username, password, and your-cluster-url to reflect your cluster.
   // See httpsdocs.mongodb.comecosystemdriversnode for more details
 
-  const uri =
-    "mongodb+srv://atharvajoshi067:ZgSvdar14OnteUZx@cluster0.9zuebnu.mongodb.net/recipe_recommender?retryWrites=true&w=majority";
+  // const uri =
+  //   "mongodb+srv://atharvajoshi067:ZgSvdar14OnteUZx@cluster0.9zuebnu.mongodb.net/recipe_recommender?retryWrites=true&w=majority";
+  const uri = 
+    "mongodb+srv://group2:group2@recipe-recommender.faeur.mongodb.net/?retryWrites=true&w=majority&appName=recipe-recommender"
   var result = false;
   try {
     // Connect to the MongoDB cluster

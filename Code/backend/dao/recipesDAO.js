@@ -171,8 +171,8 @@ export default class RecipesDAO {
             const recipesList1 = await displayCursor.toArray();
             const newreciplist = []
             let recipesList = []
-            console.log(recipesList1)
-            console.log(filters)
+            console.log("\n\n\nREcipie list is ", recipesList1)
+            console.log("\n\n\nFilters are ", filters)
             for(let i =0;i<recipesList1.length;i++){
                 // if(recipesList1[i].TotalTimeInMins<=filters["maxTime"] && recipesList1[i]["Diet-type"].toLowerCase()===filters["type"].toLowerCase())
                 newreciplist.push(recipesList1[i])
@@ -225,7 +225,7 @@ export default class RecipesDAO {
             console.error(
                 `Unable to convert cursor to array or problem counting documents, ${e}`
             );
-            return { recipesList: [], totalNumRecipes: 0 };
+            return { recipesList: ["error so you get this"], totalNumRecipes: 0 };
         }
     }
 
@@ -358,4 +358,100 @@ export default class RecipesDAO {
             return response;
         }
     }
+
+
+    static async getGroceryList(userName) {
+
+
+        try {
+            console.log(`Fetching bookmarked recipes for user: ${userName}`);
+    
+            // Fetch bookmarked recipes from the users collection
+            const bookmarkedRecipes = await this.getBookmarkedRecipes(userName);
+    
+            if (!bookmarkedRecipes || bookmarkedRecipes.length === 0) {
+                console.log(`No bookmarked recipes found for user: ${userName}`);
+                return [];
+            }
+    
+            console.log(`Bookmarked recipes:`, bookmarkedRecipes);
+    
+            let ingredientSet = new Set();
+    
+            // Iterate over bookmarked recipes and extract ingredients directly
+            for (let recipe of bookmarkedRecipes) {
+                if (recipe["Cleaned-Ingredients"]) {
+                    console.log(`Ingredients for ${recipe.TranslatedRecipeName}:`, recipe["Cleaned-Ingredients"]);
+    
+                    // Add ingredients to the set (avoiding duplicates)
+                    recipe["Cleaned-Ingredients"].split(',').forEach(ingredient => {
+                        ingredientSet.add(ingredient.trim());
+                    });
+                } else {
+                    console.log(`No cleaned ingredients found for: ${recipe.TranslatedRecipeName}`);
+                }
+            }
+    
+            const groceryList = Array.from(ingredientSet);
+            console.log(`Generated grocery list:`, groceryList);
+    
+            return groceryList;
+        } catch (error) {
+            console.error(`Error generating grocery list:`, error);
+            return { error: error.message };
+        }
+
+
+
+        // try {
+
+        //     console.log(`Fetching bookmarked recipes for user: ${userName}`);
+
+        //     // const bookmarkedRecipes = await db
+        //     //     .collection("recipe_recommender.recipe")
+        //     //     .find({ bookmarkedBy: userName })
+        //     //     .toArray();
+
+        //     const bookmarkedRecipes = await this.getBookmarkedRecipes(userName);
+
+        //     if (!bookmarkedRecipes || bookmarkedRecipes.length === 0) {
+        //         console.log(`No bookmarked recipes found for user: ${userName}`);
+        //         return [];
+        //     }
+        //     console.log(`Bookmarked recipes:`, bookmarkedRecipes);
+
+        //     let ingredientSet = new Set();
+
+        //     // Fetch recipe details from the recipe collection
+        //     for (let recipeName of bookmarkedRecipes) {
+        //         console.log(`Fetching ingredients for recipe: ${recipeName}`);
+    
+        //         const recipeData = await recipes.findOne(
+        //             { TranslatedRecipeName: recipeName },
+        //             { projection: { CleanedIngredients: 1 } }
+        //         );
+    
+        //         if (recipeData && recipeData.CleanedIngredients) {
+        //             console.log(`Ingredients for ${recipeName}:`, recipeData.CleanedIngredients);
+    
+        //             // Add ingredients to the set (avoiding duplicates)
+        //             recipeData.CleanedIngredients.split(',').forEach(ingredient => {
+        //                 ingredientSet.add(ingredient.trim());
+        //             });
+        //         } else {
+        //             console.log(`No recipe found for: ${recipeName}`);
+        //         }
+        //     }
+    
+        //     const groceryList = Array.from(ingredientSet);
+        //     console.log(`Generated grocery list:`, groceryList);
+    
+        //     return groceryList;
+        // } catch (error) {
+        //     console.error(`Error generating grocery list:`, error);
+        //     return { error: error.message };
+        // }
+
+    }
+
 }

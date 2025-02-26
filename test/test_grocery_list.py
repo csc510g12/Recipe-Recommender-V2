@@ -4,35 +4,6 @@ import time
 
 BASE_URL = "http://localhost:1000/api/v1"
 
-# @pytest.fixture(scope="module", autouse=True)
-# def setup_bookmark():
-#     """Setup function to add a recipe to the profile before grocery list tests."""
-#     payload = {
-#         "userName": "test_user",
-#         "recipe": {
-#             "_id": "67b92e0d98e13080b22d9a99",
-#             "TranslatedRecipeName": "Chicken Dum Biryani Recipe",
-#             "TranslatedIngredients": "3 Onions - sliced thin,20 gram Garlic - ground to paste,1 tablespoon Garam masala powder,4 Tomatoes - finely chopped,2 tablespoon Red Chilli powder,20 gram Ginger - ground to paste,4 Green Chillies - slit at the center,Ghee - as needed,Salt - to taste,1/2 cup Hung Curd (Greek Yogurt),Salt - as required,1 tablespoon Red Chilli powder,2 tablespoon Coriander Powder (Dhania),4 cups Basmati rice,1/2 cup Coriander (Dhania) Leaves - finely chopped,1 kg Chicken - with bone,1 teaspoon Turmeric powder (Haldi),Sunflower Oil - as needed,1/2 cup Mint Leaves (Pudina) - finely chopped",
-#             "TotalTimeInMins": 150,
-#             "Cuisine": "North Indian Recipes",
-#             "Cleaned-Ingredients": "tomato,basmati rice,gram garlic ground paste,salt,hung curd (greek yogurt),coriander (dhania) leaves,mint leaves (pudina),ghee,gram ginger ground paste,red chilli powder,green chillies the center,onion,chicken,coriander powder,turmeric powder,garam masala powder,sunflower oil",
-#             "Diet-type": "Non-Vegetarian"
-#         }
-#     }
-    
-#     response = requests.post(f"{BASE_URL}/recipes/addRecipeToProfile", json=payload)
-#     assert response.status_code == 200, "Failed to bookmark the recipe"
-#     print("\n✅ Recipe successfully bookmarked for testing.")
-
-# @pytest.mark.parametrize("username, expected_status", [
-#     ("test_user", 200),
-#     ("invalid_user", 404),
-#     ("", 400),  # Test with no username
-# ])
-# def test_get_grocery_list(username, expected_status):
-#     response = requests.get(f"{BASE_URL}/recipes/getGroceryList", params={"userName": username})
-#     assert response.status_code == expected_status
-
 
 def test_grocery_list_contains_items():
 
@@ -251,49 +222,3 @@ def test_grocery_list_duplicates():
     grocery_list = response.json()["groceryList"]
     assert len(grocery_list) == len(set(grocery_list)), "Duplicate items found in grocery list!"
 
-
-# ------------------------------------------------------
-
-# import pytest
-# import requests
-# from unittest.mock import patch
-
-# BASE_URL = "http://localhost:1000/api/v1"
-
-# # Mocked bookmarked recipes response
-# MOCK_BOOKMARKED_RECIPES = [
-#     {
-#         "_id": "67b92e0d98e13080b22d9a99",
-#         "TranslatedRecipeName": "Chicken Dum Biryani Recipe",
-#         "Cleaned-Ingredients": "tomato,basmati rice,garlic paste,salt,curd,coriander leaves,mint leaves,ghee,ginger paste,red chilli powder,green chillies,onion,chicken,coriander powder,turmeric powder,garam masala powder,sunflower oil",
-#     }
-# ]
-
-# @pytest.fixture(autouse=True)
-# def mock_get_bookmarked_recipes():
-#     """Mock the DAO method that fetches bookmarked recipes."""
-    
-#     with patch("Code.backend.dao.recipesDAO.getBookmarkedRecipes", return_value=MOCK_BOOKMARKED_RECIPES):
-#         yield
-
-# def test_get_grocery_list():
-#     """Test if the grocery list is generated correctly from mocked bookmarked recipes."""
-#     response = requests.get(f"{BASE_URL}/recipes/getGroceryList", params={"userName": "test"})
-
-#     assert response.status_code == 200, "Failed to fetch grocery list"
-#     data = response.json()
-
-#     assert "groceryList" in data, "Response does not contain groceryList"
-#     assert isinstance(data["groceryList"], list), "groceryList is not a list"
-
-#     expected_ingredients = [
-#         "tomato", "basmati rice", "garlic paste", "salt", "curd",
-#         "coriander leaves", "mint leaves", "ghee", "ginger paste",
-#         "red chilli powder", "green chillies", "onion", "chicken",
-#         "coriander powder", "turmeric powder", "garam masala powder", "sunflower oil"
-#     ]
-    
-#     for ingredient in expected_ingredients:
-#         assert ingredient in data["groceryList"], f"Missing ingredient: {ingredient}"
-
-#     print("\n✅ Grocery list correctly retrieved with mocked recipe data.")

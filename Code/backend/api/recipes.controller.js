@@ -1,6 +1,7 @@
 import { request } from "express";
 import RecipesDAO from "../dao/recipesDAO.js";
 import axios from "axios";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const defaultPassword = 'password';
 export default class RecipesController {
@@ -206,32 +207,51 @@ export default class RecipesController {
     }
     
     static async apiGenerateRecipe(req, res) {
-        const { ingredients, cuisine, maxTime, type } = req.body;
-        console.log("rq body: ", req.body);
+        const { ingredients, cuisineFromForm, maxTime, type } = req.body;
+        // console.log("rq body: ", req.body);
 
         if (!ingredients.length > 0) {
-            return res.status(400).json({ message: "Recipe name is required" });
+            return res.status(400).json({ message: "Recipe ingredients are required" });
         }
 
         try {
-            let prompt = `Generate detailed cooking instructions for the following ingredients and strictly follow the instructions. Make the response as detailed as possible. 
-            Name the recipe you generate. Make the output seems like a final recipe.`;
+            let prompt = `Generate a recipe in JSON format with this structure:
+            {
+            "name": "Recipe Name",
+            "description": "Brief description (include ${cuisineFromForm ? cuisineFromForm + ' cuisine' : ''} ${type ? 'for ' + type + ' diet' : ''} ${maxTime ? 'ready in ' + maxTime + ' minutes' : ''})",
+            "ingredients": ["list", "of", "ingredients"],
+            "instructions": ["step 1", "step 2", "step 3"]
+            }
 
-            if (cuisine) {
-                prompt += ` This should be a ${cuisine} style recipe.`;
+            Requirements:
+            1. Ingredients must be an array of strings with exact measurements (e.g., "1 cup flour")
+            2. Instructions must be a numbered array of detailed steps
+            3. Include cooking time estimates in instructions where relevant
+            4. Never use markdown formatting
+            5. Include essential cooking techniques and temperatures
+            6. Do not include the initial json structure in the response, just start with the curly brackets
+
+            Base the recipe on these ingredients: ${ingredients.join(", ")}
+            ${cuisineFromForm ? `Cuisine style: ${cuisineFromForm}` : ''}
+            ${type ? `Dietary requirements: ${type}` : ''}
+            ${maxTime ? `Maximum cooking time: ${maxTime} minutes` : ''}
+
+            Example response:
+            {
+            "name": "Vegetarian Lentil Bolognese",
+            "description": "Italian-inspired meat-free pasta sauce ready in 40 minutes",
+            "ingredients": [
+                "1 cup brown lentils",
+                "2 tbsp olive oil",
+                "1 onion, diced"
+            ],
+            "instructions": [
+                "Rinse lentils and soak in warm water for 10 minutes",
+                "Heat oil in pan over medium heat..."
+            ]
             }
-            
-            if (type) {
-                prompt += ` The recipe should be suitable for ${type} diet.`;
-            }
-            
-            if (ingredients && ingredients.length > 0) {
-                prompt += ` Use these ingredients: ${ingredients.join(", ")}.`;
-            }
-            
-            if (maxTime) {
-                prompt += ` The cooking time should be approximately ${maxTime} minutes.`;
-            }
+
+            ONLY RETURN VALID JSON WITHOUT MARKDOWN WRAPPING OR ADDITIONAL TEXT`;
 
             console.log("Prompt: ", prompt);
 
@@ -240,9 +260,11 @@ export default class RecipesController {
 
             const result = await model.generateContent(prompt);
 
-            // const response = openaiResponse.data.choices[0].text.trim();
-            console.log("Response: " ,result.response.text())
-            res.json({ result });
+            console.log("Result: ", result.response.text().slice(7,-3));
+            const recipeData = JSON.parse(result.response.text().slice(7,-3));
+
+            // console.log("my recipe: ", recipeData);
+            res.json({ generatedRecipe: recipeData });
         } catch (error) {
             console.error("Error generating response:", error.response?.data || error.message);
             res.status(500).json({ 

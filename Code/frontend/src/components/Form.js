@@ -1,9 +1,3 @@
-// Copyright (C) 2024 SE Recipe Recommender - All Rights Reserved
-// You may use, distribute and modify this code under the
-// terms of the MIT license.
-// You should have received a copy of the MIT license with
-// this file. If not, please write to: secheaper@gmail.com
-
 import React, { Component } from "react";
 import {
   HStack,
@@ -17,7 +11,18 @@ import {
   InputRightElement,
   FormLabel,
   Badge,
+  Spinner,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  List,
+  ListItem,
+  ListIcon,
 } from "@chakra-ui/react";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 import recipeDB from "../apis/recipeDB";
 import TypeAheadDropDown from "./TypeAheadDropDown";
 
@@ -30,7 +35,10 @@ class Form extends Component {
       cuisineState: 0,
       cuisine: "",
       maxTime: "", // New state for max time
-      type:"",
+      type: "",
+      isLoading: false, // New state for loading
+      generatedRecipe: null, // New state for generated recipe
+      isModalOpen: false, // New state for modal open/close
     };
   }
 
@@ -144,41 +152,51 @@ class Form extends Component {
       cuisine: document.getElementById("cuisine").value,
       email_id: document.getElementById("email_id").value,
       flag: document.getElementById("Send_email").checked,
-      TotalTimeInMins: document.getElementById("max_time").value, 
-      type: document.getElementById("type").value
+      TotalTimeInMins: document.getElementById("max_time").value,
+      type: document.getElementById("type").value,
     };
     this.props.sendFormData(dict);
     console.log(dict);
     // document.getElementById("cuisine").value = "";
     // document.getElementById("email_id").value = "";
-    
   };
 
   handleGenerateRecipe = async () => {
+    this.setState({ isLoading: true, generatedRecipe: null, isModalOpen: true }); // Open the modal
     const { ingredients, cuisine, maxTime, type } = this.state;
     const ingredientArray = Array.from(ingredients);
+    const cuisineFromForm = document.getElementById("cuisine").value; //weird bug where cuisine is not being set in state
 
     try {
       const response = await recipeDB.post("/recipes/generateRecipe", {
         ingredients: ingredientArray,
-        cuisine,
+        cuisineFromForm,
         maxTime,
         type,
       });
 
+      // console.log("Response----------------------------------------:", response);
+
       if (response.data) {
-        console.log("Generated Recipe:", response.data);
+        // console.log("Generated Recipe:", response.response.text);
+        this.setState({ generatedRecipe: response.data.generatedRecipe });
       }
     } catch (error) {
       console.error("Error generating recipe:", error);
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
+  closeModal = () => {
+    this.setState({ isModalOpen: false });
+  };
 
   render() {
+    const { isLoading, generatedRecipe, isModalOpen } = this.state;
+
     return (
       <>
-      
         <Box
           borderRadius={"lg"}
           border="2px"
@@ -257,13 +275,82 @@ class Form extends Component {
               />
             </InputGroup>
             <HStack width="100%" spacing={4}>
-            <Button data-testid="submit" onClick={this.handleSubmit} flex={1} _hover={{ bg: "black", color: "gray.100" }} color="gray.600" bg="green.300">Search Recipes</Button>
-            <Button data-testid="generate" onClick={this.handleGenerateRecipe} flex={1} _hover={{ bg: "black", color: "gray.100" }} color="gray.600" bg="green.300">Generate Recipe</Button>
-          </HStack>
+              <Button
+                data-testid="submit"
+                onClick={this.handleSubmit}
+                flex={1}
+                _hover={{ bg: "black", color: "gray.100" }}
+                color="gray.600"
+                bg="green.300"
+              >
+                Search Recipes
+              </Button>
+              <Button
+                data-testid="generate"
+                onClick={this.handleGenerateRecipe}
+                flex={1}
+                _hover={{ bg: "black", color: "gray.100" }}
+                color="gray.600"
+                bg="green.300"
+              >
+                Generate Recipe
+              </Button>
+            </HStack>
           </VStack>
         </Box>
+
+        <Modal isOpen={isModalOpen} onClose={this.closeModal}>
+          <ModalOverlay />
+          <ModalContent maxWidth="75%" width="75%">
+            <ModalHeader>AI Generated Recipe based on your suggestions!</ModalHeader>
+            <ModalBody>
+              {isLoading ? (
+                <Box display="flex" justifyContent="center" width="100%">
+                  <Spinner size="xl" />
+                </Box>
+              ) : (
+                <Box>
+                  {generatedRecipe ? (
+                    <Box>
+                      <Text fontSize="xxl" fontWeight="bold">
+                        {generatedRecipe.name}
+                      </Text>
+                      <Text>{generatedRecipe.description}</Text>
+                      <Text fontSize="md" fontWeight="semibold" mt={4}>
+                        Ingredients:
+                      </Text>
+                      <List spacing={2}>
+                        {generatedRecipe.ingredients.map((ingredient, index) => (
+                          <ListItem key={index}>
+                            <ListIcon as={CheckCircleIcon} color="green.500" />
+                            {ingredient}
+                          </ListItem>
+                        ))}
+                      </List>
+                      <Text fontSize="md" fontWeight="semibold" mt={4}>
+                        Instructions:
+                      </Text>
+                      <List spacing={2}>
+                        {generatedRecipe.instructions.map((instruction, index) => (
+                          <ListItem key={index}>
+                            <ListIcon as={CheckCircleIcon} color="green.500" />
+                            {instruction}
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Box>
+                  ) : (
+                    <Text>No recipe generated</Text>
+                  )}
+                </Box>
+              )}
+            </ModalBody>
+            <ModalFooter>
+              <Button onClick={this.closeModal}>Close</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       </>
-      
     );
   }
 }

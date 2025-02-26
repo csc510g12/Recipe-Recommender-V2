@@ -56,7 +56,7 @@ To contribute, please issue a pull request using the following procedure:
 
 - Ensure that it is of good quality. The language should be clear and concise without any spelling or grammar mistakes.
 
-- Make sure that any contribution of any sort follows the code of conduct. Our repository has a [code of conduct](https://github.com/PvPatel-1001/Recipe_Recommender/blob/main/CODE_OF_CONDUCT.md) and any pull request that does not respect these will be appropriately removed.
+- Make sure that any contribution of any sort follows the code of conduct. Our repository has a [code of conduct](CODE_OF_CONDUCT.md) and any pull request that does not respect these will be appropriately removed.
 
 <br></br>
 
@@ -96,9 +96,9 @@ You can do this in 2 ways:
 
 2. Clone the repository to your device.
 
-3. Install required packages in the front end folder by running npm install in the frontend folder.
+3. Install required packages in the frontend folder by running npm install in the frontend folder.
 
-4. Install required packages in the backend end folder by running npm install in the backend folder.
+4. Install required packages in the backendend folder by running npm install in the backend folder.
 
 5. Type in "npm start" in the frontend folder and press enter.
 

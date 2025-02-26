@@ -24,6 +24,7 @@ function parseJSON(rawInput) {
       return null;
     }
   }
+  
 export default class RecipesController {
     static async apiOAuthLogin(req, res) {
         console.log("received request for oauth login");

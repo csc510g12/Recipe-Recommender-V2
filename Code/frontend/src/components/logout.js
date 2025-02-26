@@ -1,6 +1,6 @@
 /* MIT License
 
-Copyright (c) 2024 Ayush, Yaswanth B, Yaswant M  */
+Copyright (c) 2025 Ayush Gala, Ayush Pathak, Keyur Gondhalekar */
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 

@@ -3,31 +3,38 @@ outside the browser. Known for its non-blocking, event-driven architecture, Node
 particularly suitable for building scalable network applications and server-side functionalities. It
 uses an event-driven, asynchronous I/O model, making it efficient and well-suited for real-time
 applications.
+
 - React: Developed and maintained by Facebook, React is a JavaScript library for building user
 interfaces. It employs a component-based architecture, where UIs are broken down into
 modular, reusable components. React utilizes a virtual DOM to enhance performance by
 efficiently updating only the necessary components, providing a seamless and responsive user
 experience.
+
 - Express.js: A minimalist and flexible web application framework for Node.js, Express.js
 simplifies the development of server-side applications and APIs. It offers a range of features,
 including middleware support for handling HTTP requests, routing for defining application
 endpoints, and templating engines for rendering dynamic content.
+
 - npm (Node Package Manager): The package manager for Node.js, npm allows developers to
 manage project dependencies, share and distribute code packages easily, and streamline the
 development process. It plays a crucial role in the Node.js ecosystem by providing access to a
 vast repository of open-source packages.
+
 - Jest: A JavaScript testing framework developed by Facebook, Jest focuses on simplicity and
 efficiency. It is widely used for testing JavaScript code, providing features such as test isolation,
 snapshot testing, and parallel test execution. Jest is particularly known for its fast test execution
 and convenient testing utilities.
+
 - MongoDB: A NoSQL database that stores data in flexible, JSON-like BSON (Binary JSON)
 documents. MongoDB is designed for scalability and high performance, supporting horizontal
 scaling across multiple servers. It is particularly suitable for applications dealing with large
 volumes of unstructured or semi-structured data.
+
 - HTML5: The fifth version of the Hypertext Markup Language, HTML5 introduces new elements
 and APIs that enhance the structure and functionality of web pages. It includes native support
 for multimedia elements, form validation, and semantic markup, contributing to a more
 feature-rich and accessible web.
+
 - CSS3: The latest version of Cascading Style Sheets, CSS3 introduces advanced styling
 features, including transitions, animations, and flexible box layouts. It enhances the visual
 presentation of web pages and supports responsive design, enabling the creation of modern

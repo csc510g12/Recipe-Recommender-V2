@@ -4,6 +4,26 @@ import axios from "axios";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const defaultPassword = 'password';
+
+function parseJSON(rawInput) {
+    // Extract the content between the first and last triple backticks
+    const jsonPattern = /```json\s*([\s\S]*?)```/;
+    const match = rawInput.match(jsonPattern);
+    
+    if (match && match[1]) {
+      // Parse the extracted JSON string
+      try {
+        const parsedData = JSON.parse(match[1]);
+        return parsedData;
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+        return null;
+      }
+    } else {
+      console.error("No JSON content found between backticks");
+      return null;
+    }
+  }
 export default class RecipesController {
     static async apiOAuthLogin(req, res) {
         console.log("received request for oauth login");
@@ -253,15 +273,15 @@ export default class RecipesController {
 
             ONLY RETURN VALID JSON WITHOUT MARKDOWN WRAPPING OR ADDITIONAL TEXT`;
 
-            console.log("Prompt: ", prompt);
+            // console.log("Prompt: ", prompt);
 
-            const genAI = new GoogleGenerativeAI("AIzaSyCYbwgMdaBbkK6XFssMpBjCOqFkQUqu40U");
+            const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
             const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
             const result = await model.generateContent(prompt);
-
-            console.log("Result: ", result.response.text().slice(7,-3));
-            const recipeData = JSON.parse(result.response.text().slice(7,-3));
+        
+            const recipeData = parseJSON(result.response.text());
+            // console.log("Result: ", recipeData);
 
             // console.log("my recipe: ", recipeData);
             res.json({ generatedRecipe: recipeData });

@@ -1,5 +1,8 @@
-import { render, cleanup, screen, fireEvent } from "@testing-library/react";
+import { render, cleanup, screen, fireEvent, waitFor} from "@testing-library/react";
+import '@testing-library/jest-dom';
 import RecipeList from "../RecipeList";
+import React from 'react';
+import recipeDB from '.../apis/recipeDB';
 
 const recipes=[
     {
@@ -67,3 +70,305 @@ test("should render recipe details modal on click", ()=>{
     const modalElement = screen.getByTestId('recipeModal')
     expect(modalElement).toBeInTheDocument()
 })
+
+
+//tests added by agala2
+
+// Mock the API module
+jest.mock('.../apis/recipeDB', () => ({
+    post: jest.fn()
+  }));
+  
+  // Mock the external components and libraries
+  jest.mock('react-markdown', () => (props) => <div data-testid="markdown">{props.children}</div>);
+  jest.mock('react-icons/fa', () => ({
+    FaPaperPlane: () => <div data-testid="paper-plane-icon" />
+  }));
+  jest.mock('../RecipeCard', () => ({ handler, recipe }) => (
+    <div data-testid="recipe-card" onClick={() => handler(recipe)}>
+      {recipe.TranslatedRecipeName}
+    </div>
+  ));
+  
+  describe('RecipeList Component', () => {
+    const mockRecipes = [
+      {
+        _id: '1',
+        TranslatedRecipeName: 'Test Recipe 1',
+        'Recipe-rating': '4.5',
+        'Diet-type': 'Vegetarian',
+        TotalTimeInMins: 30,
+        TranslatedInstructions: 'Test instructions 1',
+        'image-url': 'test-image-1.jpg',
+        Calories: '300'
+      },
+      {
+        _id: '2',
+        TranslatedRecipeName: 'Test Recipe 2',
+        'Recipe-rating': '4.0',
+        'Diet-type': 'Non-Vegetarian',
+        TotalTimeInMins: 45,
+        TranslatedInstructions: 'Test instructions 2',
+        'image-url': 'test-image-2.jpg',
+        Calories: 'Not Available'
+      }
+    ];
+  
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+  
+    // Test 1
+    test('renders recipe cards when recipes are provided', () => {
+      render(<RecipeList recipes={mockRecipes} />);
+      expect(screen.getAllByTestId('recipe-card')).toHaveLength(2);
+    });
+  
+    // Test 2
+    test('displays "Searching for a recipe?" when no recipes are provided', () => {
+      render(<RecipeList recipes={[]} />);
+      expect(screen.getByTestId('noResponseText')).toHaveTextContent('Searching for a recipe?');
+    });
+  
+    // Test 3
+    test('opens modal when recipe card is clicked', () => {
+      render(<RecipeList recipes={mockRecipes} />);
+      fireEvent.click(screen.getAllByTestId('recipe-card')[0]);
+      expect(screen.getByTestId('recipeModal')).toBeInTheDocument();
+      expect(screen.getByText('Test Recipe 1')).toBeInTheDocument();
+    });
+  
+    // Test 4
+    test('closes modal when close button is clicked', () => {
+      render(<RecipeList recipes={mockRecipes} />);
+      
+      // Open modal
+      fireEvent.click(screen.getAllByTestId('recipe-card')[0]);
+      expect(screen.getByTestId('recipeModal')).toBeInTheDocument();
+      
+      // Close modal
+      fireEvent.click(screen.getByText('Close'));
+      expect(screen.queryByTestId('recipeModal')).not.toBeInTheDocument();
+    });
+  
+    // Test 5
+    test('displays actual calories when available', () => {
+      render(<RecipeList recipes={mockRecipes} />);
+      fireEvent.click(screen.getAllByTestId('recipe-card')[0]);
+      expect(screen.getByText(/Calories:/)).toBeInTheDocument();
+      expect(screen.getByText(/300 kcal/)).toBeInTheDocument();
+    });
+  
+    // Test 6
+    test('calculates estimated calories when calories are not available', () => {
+      render(<RecipeList recipes={mockRecipes} />);
+      fireEvent.click(screen.getAllByTestId('recipe-card')[1]);
+      expect(screen.getByText(/Calories:/)).toBeInTheDocument();
+      expect(screen.getByText(/425 kcal \(Estimated\)/)).toBeInTheDocument();
+    });
+  
+    // Test 7
+    test('renders YouTube link with correct search query', () => {
+      render(<RecipeList recipes={mockRecipes} />);
+      fireEvent.click(screen.getAllByTestId('recipe-card')[0]);
+      
+      const youtubeLink = screen.getByText('Youtube');
+      expect(youtubeLink).toHaveAttribute(
+        'href', 
+        'https://www.youtube.com/results?search_query=Test Recipe 1'
+      );
+    });
+  
+    // Test 8
+    test('AI prompt input changes when user types', async () => {
+      render(<RecipeList recipes={mockRecipes} />);
+      
+      // Open modal
+      fireEvent.click(screen.getAllByTestId('recipe-card')[0]);
+      
+      // Find input and type in it
+      const promptInput = screen.getByPlaceholderText(/What can I substitute/);
+      fireEvent.change(promptInput, { target: { value: 'Test prompt' } });
+      
+      expect(promptInput.value).toBe('Test prompt');
+    });
+  
+    // Test 9
+    test('calls AI API when submit button is clicked', async () => {
+      recipeDB.post.mockResolvedValueOnce({
+        status: 200,
+        data: { response: 'AI test response' }
+      });
+      
+      render(<RecipeList recipes={mockRecipes} />);
+      
+      // Open modal
+      fireEvent.click(screen.getAllByTestId('recipe-card')[0]);
+      
+      // Type in prompt and submit
+      const promptInput = screen.getByPlaceholderText(/What can I substitute/);
+      fireEvent.change(promptInput, { target: { value: 'Test prompt' } });
+      
+      const submitButton = screen.getByLabelText('Send prompt to AI Chef');
+      fireEvent.click(submitButton);
+      
+      await waitFor(() => {
+        expect(recipeDB.post).toHaveBeenCalledWith('/recipes/aiChef', {
+          context: {
+            recipeName: 'Test Recipe 1',
+            instructions: 'Test instructions 1',
+            dietType: 'Vegetarian',
+            query: 'Test prompt'
+          }
+        });
+      });
+    });
+  
+    // Test 10
+    test('submits AI prompt when Enter key is pressed', async () => {
+      recipeDB.post.mockResolvedValueOnce({
+        status: 200,
+        data: { response: 'AI test response' }
+      });
+      
+      render(<RecipeList recipes={mockRecipes} />);
+      
+      // Open modal
+      fireEvent.click(screen.getAllByTestId('recipe-card')[0]);
+      
+      // Type in prompt and press Enter
+      const promptInput = screen.getByPlaceholderText(/What can I substitute/);
+      fireEvent.change(promptInput, { target: { value: 'Test prompt' } });
+      fireEvent.keyPress(promptInput, { key: 'Enter', code: 13, charCode: 13 });
+      
+      await waitFor(() => {
+        expect(recipeDB.post).toHaveBeenCalledWith('/recipes/aiChef', {
+          context: expect.any(Object)
+        });
+      });
+    });
+  
+    // Test 11
+    test('displays AI response when API call is successful', async () => {
+      recipeDB.post.mockResolvedValueOnce({
+        status: 200,
+        data: { response: 'AI test response' }
+      });
+      
+      render(<RecipeList recipes={mockRecipes} />);
+      
+      // Open modal
+      fireEvent.click(screen.getAllByTestId('recipe-card')[0]);
+      
+      // Type in prompt and submit
+      const promptInput = screen.getByPlaceholderText(/What can I substitute/);
+      fireEvent.change(promptInput, { target: { value: 'Test prompt' } });
+      
+      const submitButton = screen.getByLabelText('Send prompt to AI Chef');
+      fireEvent.click(submitButton);
+      
+      await waitFor(() => {
+        expect(screen.getByTestId('markdown')).toHaveTextContent('AI test response');
+      });
+    });
+  
+    // Test 12
+    test('displays error message when API call fails', async () => {
+      recipeDB.post.mockRejectedValueOnce(new Error('API Error'));
+      
+      render(<RecipeList recipes={mockRecipes} />);
+      
+      // Open modal
+      fireEvent.click(screen.getAllByTestId('recipe-card')[0]);
+      
+      // Type in prompt and submit
+      const promptInput = screen.getByPlaceholderText(/What can I substitute/);
+      fireEvent.change(promptInput, { target: { value: 'Test prompt' } });
+      
+      const submitButton = screen.getByLabelText('Send prompt to AI Chef');
+      fireEvent.click(submitButton);
+      
+      await waitFor(() => {
+        expect(screen.getByTestId('markdown')).toHaveTextContent(/Sorry, I couldn't process your request/);
+      });
+    });
+  
+    // Test 13
+    test('clears AI response when a new recipe is selected', () => {
+      recipeDB.post.mockResolvedValueOnce({
+        status: 200,
+        data: { response: 'AI test response' }
+      });
+      
+      render(<RecipeList recipes={mockRecipes} />);
+      
+      // Open modal for first recipe
+      fireEvent.click(screen.getAllByTestId('recipe-card')[0]);
+      
+      // Type in prompt and submit
+      const promptInput = screen.getByPlaceholderText(/What can I substitute/);
+      fireEvent.change(promptInput, { target: { value: 'Test prompt' } });
+      
+      const submitButton = screen.getByLabelText('Send prompt to AI Chef');
+      fireEvent.click(submitButton);
+      
+      // Close modal
+      fireEvent.click(screen.getByText('Close'));
+      
+      // Open modal for second recipe
+      fireEvent.click(screen.getAllByTestId('recipe-card')[1]);
+      
+      // Check that AI response is cleared
+      expect(screen.queryByTestId('markdown')).not.toBeInTheDocument();
+    });
+  
+    // Test 14
+    test('does not make API call if AI prompt is empty', async () => {
+      render(<RecipeList recipes={mockRecipes} />);
+      
+      // Open modal
+      fireEvent.click(screen.getAllByTestId('recipe-card')[0]);
+      
+      // Submit with empty prompt
+      const submitButton = screen.getByLabelText('Send prompt to AI Chef');
+      fireEvent.click(submitButton);
+      
+      expect(recipeDB.post).not.toHaveBeenCalled();
+    });
+  
+    // Test 15
+    test('shows loading state while waiting for AI response', async () => {
+      // Use a promise that we can resolve manually to control the timing
+      let resolvePromise;
+      const promise = new Promise((resolve) => {
+        resolvePromise = resolve;
+      });
+      
+      recipeDB.post.mockReturnValueOnce(promise);
+      
+      render(<RecipeList recipes={mockRecipes} />);
+      
+      // Open modal
+      fireEvent.click(screen.getAllByTestId('recipe-card')[0]);
+      
+      // Type in prompt and submit
+      const promptInput = screen.getByPlaceholderText(/What can I substitute/);
+      fireEvent.change(promptInput, { target: { value: 'Test prompt' } });
+      
+      const submitButton = screen.getByLabelText('Send prompt to AI Chef');
+      fireEvent.click(submitButton);
+      
+      // Check that button is in loading state
+      expect(submitButton).toHaveAttribute('data-loading');
+      
+      // Resolve the promise to complete the API call
+      resolvePromise({
+        status: 200,
+        data: { response: 'AI test response' }
+      });
+      
+      await waitFor(() => {
+        expect(submitButton).not.toHaveAttribute('data-loading');
+      });
+    });
+  });

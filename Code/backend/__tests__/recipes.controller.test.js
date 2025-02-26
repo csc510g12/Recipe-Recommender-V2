@@ -11,8 +11,15 @@ jest.mock('@google/generative-ai');
 describe('RecipesController', () => {
   describe('apiGenerateRecipe', () => {
     let req, res;
+    let originalEnv;
 
     beforeEach(() => {
+      // Save original environment
+      originalEnv = process.env;
+      
+      // Set up mock environment
+      process.env = { ...originalEnv, GEMINI_API_KEY: 'mock-api-key' };
+
       req = {
         body: {
           ingredients: ['Chicken', 'Rice'],
@@ -26,6 +33,11 @@ describe('RecipesController', () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
       };
+    });
+
+    afterEach(() => {
+      // Restore original environment
+      process.env = originalEnv;
     });
 
     it('should return a 400 status code when no ingredients are provided', async () => {
@@ -64,8 +76,6 @@ describe('RecipesController', () => {
       }));
 
       await RecipesController.apiGenerateRecipe(req, res);
-
-      console.log(res.json.mock.calls);
 
       expect(res.json).toHaveBeenCalledWith({
         generatedRecipe: {
@@ -321,7 +331,8 @@ describe('RecipesController', () => {
     });
 
     it('should handle missing API keys', async () => {
-      process.env.GEMINI_API_KEY = '';
+      // Temporarily remove the API key for this specific test
+      delete process.env.GEMINI_API_KEY;
 
       await RecipesController.apiGenerateRecipe(req, res);
 

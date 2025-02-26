@@ -4,6 +4,26 @@ import axios from "axios";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const defaultPassword = 'password';
+
+function parseJSON(rawInput) {
+    // Extract the content between the first and last triple backticks
+    const jsonPattern = /```json\s*([\s\S]*?)```/;
+    const match = rawInput.match(jsonPattern);
+    
+    if (match && match[1]) {
+      // Parse the extracted JSON string
+      try {
+        const parsedData = JSON.parse(match[1]);
+        return parsedData;
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+        return null;
+      }
+    } else {
+      console.error("No JSON content found between backticks");
+      return null;
+    }
+  }
 export default class RecipesController {
     static async apiOAuthLogin(req, res) {
         console.log("received request for oauth login");
@@ -210,61 +230,90 @@ export default class RecipesController {
     }
     
     static async apiGenerateRecipe(req, res) {
-        const { recipeName, cookingTime, dietType, cuisine, ingredients } = req.body;
-
-        if (!recipeName) {
-            return res.status(400).json({ message: "Recipe name is required" });
+        const { ingredients, cuisineFromForm, maxTime, type } = req.body;
+    
+        if (!ingredients || !ingredients.length) {
+            return res.status(400).json({ message: "Recipe ingredients are required" });
         }
-
-        try {   
-            let prompt = `Generate detailed cooking instructions for ${recipeName}.`;
-            
-            if (cuisine) {
-                prompt += ` This should be a ${cuisine} style recipe.`;
+        
+        // Check if API key is available
+        if (!process.env.GEMINI_API_KEY) {
+            return res.status(500).json({ 
+                message: "Failed to generate response",
+                error: "API key is missing" 
+            });
+        }
+    
+        try {
+            let prompt = `Generate a recipe in JSON format with this structure:
+            {
+            "name": "Recipe Name",
+            "description": "Brief description (include ${cuisineFromForm ? cuisineFromForm + ' cuisine' : ''} ${type ? 'for ' + type + ' diet' : ''} ${maxTime ? 'ready in ' + maxTime + ' minutes' : ''})",
+            "ingredients": ["list", "of", "ingredients"],
+            "instructions": ["step 1", "step 2", "step 3"]
             }
-            
-            if (dietType) {
-                prompt += ` The recipe should be suitable for ${dietType} diet.`;
+    
+            Requirements:
+            1. Ingredients must be an array of strings with exact measurements (e.g., "1 cup flour")
+            2. Instructions must be a numbered array of detailed steps
+            3. Include cooking time estimates in instructions where relevant
+            4. Never use markdown formatting
+            5. Include essential cooking techniques and temperatures
+            6. Do not include the initial json structure in the response, just start with the curly brackets
+    
+            Base the recipe on these ingredients: ${ingredients.join(", ")}
+            ${cuisineFromForm ? `Cuisine style: ${cuisineFromForm}` : ''}
+            ${type ? `Dietary requirements: ${type}` : ''}
+            ${maxTime ? `Maximum cooking time: ${maxTime} minutes` : ''}
+    
+            Example response:
+            {
+            "name": "Vegetarian Lentil Bolognese",
+            "description": "Italian-inspired meat-free pasta sauce ready in 40 minutes",
+            "ingredients": [
+                "1 cup brown lentils",
+                "2 tbsp olive oil",
+                "1 onion, diced"
+            ],
+            "instructions": [
+                "Rinse lentils and soak in warm water for 10 minutes",
+                "Heat oil in pan over medium heat..."
+            ]
             }
-            
-            if (ingredients && ingredients.length > 0) {
-                prompt += ` Use these ingredients: ${ingredients.join(", ")}.`;
+    
+            ONLY RETURN VALID JSON WITHOUT MARKDOWN WRAPPING OR ADDITIONAL TEXT`;
+    
+            const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+            const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    
+            const result = await model.generateContent(prompt);
+    
+            if (!result || !result.response) {
+                throw new Error("Failed to generate response");
             }
+        
+            // Get the text response
+            const responseText = result.response.text();
             
-            if (cookingTime) {
-                prompt += ` The cooking time should be approximately ${cookingTime} minutes.`;
-            }
-
-            prompt += ` Please provide step-by-step cooking instructions.`;
-            console.log("Prompt: ", prompt);
-
-            const openaiResponse = await axios.post(
-                "https://api.openai.com/v1/chat/completions",  
-                {
-                    model: "gpt-3.5-turbo",  
-                    messages: [{
-                        role: "user",
-                        content: prompt
-                    }],
-                    temperature: 0.7,
-                    max_tokens: 500
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-                        "Content-Type": "application/json",
-                    },
+            // Try to parse the JSON directly first (for test compatibility)
+            try {
+                const recipeData = JSON.parse(responseText);
+                return res.json({ generatedRecipe: recipeData });
+            } catch (parseError) {
+                // If direct parsing fails, try the markdown extraction method
+                const recipeData = parseJSON(responseText);
+                
+                if (!recipeData) {
+                    throw new Error("Failed to parse recipe data");
                 }
-            );
-
-            const instructions = openaiResponse.data.choices[0].message.content.trim();
-            console.log("Instructions: " ,instructions)
-            res.json({ instructions });
+                
+                return res.json({ generatedRecipe: recipeData });
+            }
         } catch (error) {
-            console.error("Error generating recipe:", error.response?.data || error.message);
-            res.status(500).json({ 
-                message: "Failed to generate recipe",
-                error: error.response?.data || error.message 
+            console.error("Error generating response:", error.message);
+            return res.status(500).json({ 
+                message: "Failed to generate response",
+                error: error.message 
             });
         }
     }

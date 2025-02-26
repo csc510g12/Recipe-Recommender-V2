@@ -282,6 +282,7 @@ class Form extends Component {
                 _hover={{ bg: "black", color: "gray.100" }}
                 color="gray.600"
                 bg="green.300"
+                // isDisabled={this.state.ingredients.size === 0}
               >
                 Search Recipes
               </Button>
@@ -292,6 +293,7 @@ class Form extends Component {
                 _hover={{ bg: "black", color: "gray.100" }}
                 color="gray.600"
                 bg="green.300"
+                // isDisabled={this.state.ingredients.size === 0}
               >
                 Generate Recipe
               </Button>
@@ -300,13 +302,13 @@ class Form extends Component {
         </Box>
 
         <Modal isOpen={isModalOpen} onClose={this.closeModal}>
-          <ModalOverlay />
+          <ModalOverlay data-testid='modal-overlay'/>
           <ModalContent maxWidth="75%" width="75%">
             <ModalHeader>AI Generated Recipe based on your suggestions!</ModalHeader>
             <ModalBody>
               {isLoading ? (
                 <Box display="flex" justifyContent="center" width="100%">
-                  <Spinner size="xl" />
+                  <Spinner size="xl" role="status" />
                 </Box>
               ) : (
                 <Box>

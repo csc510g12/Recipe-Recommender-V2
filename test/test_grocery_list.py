@@ -1,5 +1,6 @@
 import pytest
 import requests
+import time
 
 BASE_URL = "http://localhost:1000/api/v1"
 
@@ -197,6 +198,58 @@ def test_grocery_list_api_failure():
 
 
 
+
+
+
+# ------------------------------------------------------
+
+
+def test_empty_grocery_list_for_new_user():
+    response = requests.get(f"{BASE_URL}/recipes/getGroceryList", params={"userName": "new_user"})
+    assert response.status_code == 200
+    assert response.json()["groceryList"] == []
+
+def test_grocery_list_after_deleting_recipe():
+    payload = {"userName": "test_user", "recipe": {"_id": "recipe_to_delete", "TranslatedRecipeName": "Test Recipe", "Cleaned-Ingredients": "ingredient1, ingredient2"}}
+    requests.post(f"{BASE_URL}/recipes/addRecipeToProfile", json=payload)
+    
+    requests.post(f"{BASE_URL}/recipes/removeRecipeFromProfile", json={"userName": "test_user", "recipeId": "recipe_to_delete"})
+    response = requests.get(f"{BASE_URL}/recipes/getGroceryList", params={"userName": "test_user"})
+    
+    assert "ingredient1" not in response.json()["groceryList"]
+
+def test_api_response_time():
+    start_time = time.time()
+    response = requests.get(f"{BASE_URL}/recipes/getGroceryList", params={"userName": "test_user"})
+    elapsed_time = time.time() - start_time
+    assert elapsed_time < 1, "API response time is too slow!"
+
+def test_grocery_list_special_chars_username():
+    response = requests.get(f"{BASE_URL}/recipes/getGroceryList", params={"userName": "user@123"})
+    assert response.status_code == 200
+
+def test_case_sensitivity_username():
+    lower_case = requests.get(f"{BASE_URL}/recipes/getGroceryList", params={"userName": "test_user"}).json()
+    upper_case = requests.get(f"{BASE_URL}/recipes/getGroceryList", params={"userName": "TEST_USER"}).json()
+    assert lower_case == upper_case, "Username should be case insensitive!"
+
+def test_grocery_list_db_failure():
+    try:
+        response = requests.get(f"{BASE_URL}/recipes/getGroceryList", params={"userName": "test_user"})
+    except requests.exceptions.RequestException:
+        response = None
+    assert response is None, "The API should handle database failure properly."
+
+def test_large_grocery_list():
+    for i in range(10):
+        requests.post(f"{BASE_URL}/recipes/addRecipeToProfile", json={"userName": "test_user", "recipe": {"_id": f"recipe_{i}", "Cleaned-Ingredients": "ingredientX, ingredientY"}})
+    response = requests.get(f"{BASE_URL}/recipes/getGroceryList", params={"userName": "test_user"})
+    assert "ingredientX" in response.json()["groceryList"]
+
+def test_grocery_list_duplicates():
+    response = requests.get(f"{BASE_URL}/recipes/getGroceryList", params={"userName": "test_user"})
+    grocery_list = response.json()["groceryList"]
+    assert len(grocery_list) == len(set(grocery_list)), "Duplicate items found in grocery list!"
 
 
 # ------------------------------------------------------

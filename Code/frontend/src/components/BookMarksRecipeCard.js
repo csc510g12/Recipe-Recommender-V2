@@ -193,7 +193,7 @@ const BookMarksRecipeCard = ({key, recipe, handler, onDelete }) => {
 
           {/* Delete Button */}
           <Button
-            mt="3"
+            mb="3"
             colorScheme="red"
             leftIcon={<TrashIcon />}
             isLoading={isLoading}

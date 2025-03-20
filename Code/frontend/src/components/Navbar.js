@@ -13,38 +13,35 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
-  useColorModeValue,
   Stack,
-  useColorMode,
   Center,
   Heading,
   Text,
 } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 
-const NavLink = (props) => {
-  const { children } = props;
+// const NavLink = (props) => {
+//   const { children } = props;
 
-  return (
-    <Box
-      as="a"
-      px={2}
-      py={1}
-      rounded={'md'}
-      _hover={{
-        textDecoration: 'none',
-        bg: useColorModeValue('gray.200', 'gray.700'),
-      }}
-      href={'#'}>
-      {children}
-    </Box>
-  );
-};
+//   return (
+//     <Box
+//       as="a"
+//       px={2}
+//       py={1}
+//       rounded={'md'}
+//       _hover={{
+//         textDecoration: 'none',
+//         bg: useColorModeValue('gray.200', 'gray.700'),
+//       }}
+//       href={'#'}>
+//       {children}
+//     </Box>
+//   );
+// };
 
 export default function Nav(props) {
-  const { colorMode } = useColorMode();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const { colorMode } = useColorMode();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { logout, user } = useAuth0();
 

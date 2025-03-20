@@ -163,7 +163,7 @@ class Form extends Component {
 
   handleGenerateRecipe = async () => {
     this.setState({ isLoading: true, generatedRecipe: null, isModalOpen: true }); // Open the modal
-    const { ingredients, cuisine, maxTime, type } = this.state;
+    const { ingredients, maxTime, type } = this.state;
     const ingredientArray = Array.from(ingredients);
     const cuisineFromForm = document.getElementById("cuisine").value; //weird bug where cuisine is not being set in state
 

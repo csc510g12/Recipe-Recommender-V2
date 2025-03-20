@@ -21,7 +21,7 @@ import recipeDB from "../apis/recipeDB";
 
 const AddRecipe = () => {
   const toast = useToast();
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [setIsGenerating] = useState(false);
   const [recipe, setRecipe] = useState({
     recipeName: "",
     cookingTime: 0,

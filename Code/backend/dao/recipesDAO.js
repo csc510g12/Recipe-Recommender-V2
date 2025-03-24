@@ -135,8 +135,9 @@ export default class RecipesDAO {
         let query;
         if (filters) {
             if ("CleanedIngredients" in filters) {
+                const cleanedIngredients = filters["CleanedIngredients"] || [];
                 var str = "(?i)";
-                for (var i = 0; i < filters["CleanedIngredients"].length; i++) {
+                for (var i = 0; i < cleanedIngredients.length; i++) {
                     const str1 = filters["CleanedIngredients"][i];
                     str += "(?=.*" + str1 + ")";
                 }
@@ -152,7 +153,7 @@ export default class RecipesDAO {
             }
         }
 
-        // console.log("\n\n\nFilters in the DAO controller are: ", filters)
+        console.log("\n\n\nFilters in the DAO controller are: ", filters)
 
         let cursor;
 

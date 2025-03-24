@@ -48,7 +48,7 @@ const RecipeCard = ({key, recipe, handler }) => {
     };
 
     fetchBookmarkedRecipes();
-  }, [key]);
+  }, [key, user.nickname, recipe._id]);
 
   const handleClick = () => {
     if (handler) {

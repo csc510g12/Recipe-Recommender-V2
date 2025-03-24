@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Table, Tbody, Tr, Td, Thead, Th } from "@chakra-ui/react";
+import { Table, Tbody, Tr, Td, Thead, Th } from "@chakra-ui/react";
 
 const GroceryList = ({ groceryList, fetchGroceryList }) => {
   return (

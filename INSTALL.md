@@ -54,7 +54,7 @@ You can set up the project in two ways:
    The database requires a dataset to function correctly. The CSV file containing the recipes is located at `Data/final_recipe_recommender.csv`. To load the data into MongoDB, use `mongoimport`:
 
    ```sh
-   mongoimport --uri=<MongoDB-ATLAS-URI> --db=<name of database> --collection=recipes --type=csv --headerline --file=<Path-to-dataset>
+   mongoimport --uri=<MongoDB-ATLAS-URI> --db=<name of database> --collection=recipe --type=csv --headerline --file=<Path-to-dataset>
    ```
 
 5. **Start the Frontend**

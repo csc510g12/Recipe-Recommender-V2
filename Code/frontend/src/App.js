@@ -171,7 +171,7 @@ class App extends Component {
   render() {
     this.registerUser();
     const { isAuthenticated, user } = this.props.auth0;
-    const { isProfileView, recipeList, recipeByNameList, groceryList, isLoading, userData } = this.state;
+    const { isProfileView, recipeList, recipeByNameList, isLoading, userData } = this.state;
     this.registerUser();
     return (
       <div>

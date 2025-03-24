@@ -115,6 +115,9 @@ const RecipeList = ({ recipes }) => {
     }
   };
 
+  const ingredientsString = currentRecipe["TranslatedIngredients"] || "";
+  const ingredientsArray = ingredientsString.split(',');
+
   return (
     <>
       <Box
@@ -171,6 +174,14 @@ const RecipeList = ({ recipes }) => {
                 </Text>
               </Box>
             </Flex>
+            <Text>
+              <Text as={"b"}>Ingredients: </Text> {ingredientsArray.map((ingredients, idx) => (
+                  <div key={idx}>
+                    {ingredients.trim()}
+                  </div>
+                )
+              )}
+            </Text>
             <Text>
               <Text as={"b"}>Instructions: </Text> {currentRecipe["TranslatedInstructions"]}
             </Text>

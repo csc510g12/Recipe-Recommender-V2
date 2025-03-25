@@ -3,12 +3,16 @@ import { ChakraProvider, Button } from '@chakra-ui/react';
 
 const TextToSpeech = ({ text }) => {
 
-    const [paused, setPaused] = useState(false);
+    // Create states for TTS
+    const [paused, setPaused] = useState(true);
     const [speech, setSpeech] = useState(null);
+
+    // Clean out periods for TTS as it says "dot" instead of pausing
+    const cleanText = text.replace(/\./g, "   ");
 
     useEffect(() => {
         const synth = window.speechSynthesis;
-        const speechText = new SpeechSynthesisUtterance(text);
+        const speechText = new SpeechSynthesisUtterance(cleanText);
 
         setSpeech(speechText);
 
@@ -17,6 +21,7 @@ const TextToSpeech = ({ text }) => {
         };
     }, [text]);
 
+    // Handles playing TTS
     const handlePlay = () => {
         const synth = window.speechSynthesis;
 
@@ -29,6 +34,7 @@ const TextToSpeech = ({ text }) => {
         setPaused(false);
     };
 
+    // Handles pausing TTS
     const handlePause = () => {
         const synth = window.speechSynthesis;
 
@@ -37,6 +43,7 @@ const TextToSpeech = ({ text }) => {
         setPaused(true);
     };
 
+    // Button click function
     const handleClick = () => {
         if (paused) {
             handlePlay();
@@ -49,7 +56,7 @@ const TextToSpeech = ({ text }) => {
 
     return (
         <ChakraProvider>
-            <Button colorScheme="teal" variant="solid" onClick={ handleClick }> {paused ? "Pause" : "Play"} </Button>
+            <Button colorScheme="teal" variant="solid" onClick={ handleClick }> {paused ? "Play" : "Pause"} </Button>
         </ChakraProvider>
     )
 }

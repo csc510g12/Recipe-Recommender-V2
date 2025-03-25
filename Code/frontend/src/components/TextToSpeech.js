@@ -19,7 +19,7 @@ const TextToSpeech = ({ text }) => {
         return () => {
             synth.cancel();
         };
-    }, [text]);
+    }, [cleanText]);
 
     // Handles playing TTS
     const handlePlay = () => {

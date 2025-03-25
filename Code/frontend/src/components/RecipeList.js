@@ -14,6 +14,7 @@ import RecipeCard from "./RecipeCard";
 import {FaPaperPlane} from "react-icons/fa"
 import recipeDB from "../apis/recipeDB";
 import ReactMarkdown from "react-markdown";
+import TextToSpeech from "./TextToSpeech";
 
 // Component to handle all the recipes
 const RecipeList = ({ recipes }) => {
@@ -193,6 +194,8 @@ const RecipeList = ({ recipes }) => {
                 Youtube
               </a>
             </Text>
+
+            <TextToSpeech text={currentRecipe["TranslatedInstructions"]} />
 
             {/* AI Chef Suggestion Box */}
             <Box mt={6} p={4} borderWidth="1px" borderRadius="lg">

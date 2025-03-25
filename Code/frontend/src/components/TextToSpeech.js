@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, HStack } from '@chakra-ui/react';
+import { ChakraProvider, Button } from '@chakra-ui/react';
 
 const TextToSpeech = ({ text }) => {
 
@@ -37,8 +37,20 @@ const TextToSpeech = ({ text }) => {
         setPaused(true);
     };
 
+    const handleClick = () => {
+        if (paused) {
+            handlePlay();
+            setPaused(false);
+        } else {
+            handlePause();
+            setPaused(true);
+        }
+    }
+
     return (
-        <Button colorPalette="green" variant="solid" onClick={ handlePlay }> BUTTON FOR NOW </Button>
+        <ChakraProvider>
+            <Button colorScheme="teal" variant="solid" onClick={ handleClick }> {paused ? "Pause" : "Play"} </Button>
+        </ChakraProvider>
     )
 }
 

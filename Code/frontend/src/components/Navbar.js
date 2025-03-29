@@ -1,6 +1,3 @@
-/* MIT License
-
-Copyright (c) 2025 Ayush Gala, Ayush Pathak, Keyur Gondhalekar */
 'use client';
 
 import {
@@ -17,33 +14,15 @@ import {
   Center,
   Heading,
   Text,
+  Switch,
+  useColorMode,
+  HStack,
 } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 
-// const NavLink = (props) => {
-//   const { children } = props;
-
-//   return (
-//     <Box
-//       as="a"
-//       px={2}
-//       py={1}
-//       rounded={'md'}
-//       _hover={{
-//         textDecoration: 'none',
-//         bg: useColorModeValue('gray.200', 'gray.700'),
-//       }}
-//       href={'#'}>
-//       {children}
-//     </Box>
-//   );
-// };
-
 export default function Nav(props) {
-  // const { colorMode } = useColorMode();
-  // const { isOpen, onOpen, onClose } = useDisclosure();
-
   const { logout, user } = useAuth0();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const handleBookMarks = () => {
     props.handleBookMarks();
@@ -51,44 +30,55 @@ export default function Nav(props) {
 
   const handleLogout = () => {
     logout({
-      returnTo: window.location.origin,  // Redirects to home after logging out
+      returnTo: window.location.origin,
     });
   };
 
   return (
     <>
-      <Box color={"black"} mb={5} bg={"green.300"} px={4}>
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+      <Box color="black" mb={5} bg="green.300" px={4}>
+        <Flex h={16} alignItems="center" justifyContent="space-between">
           <Box pl={10}>
-            <Heading size={"md"}>Saveurs Sélection</Heading>
+            <Heading size="md">Saveurs Sélection</Heading>
           </Box>
 
-          <Flex alignItems={'center'}>
-            <Stack direction={'row'} spacing={7}>
+          <Flex alignItems="center">
+            <Stack direction="row" spacing={6} align="center">
+              {/* Dark mode toggle */}
+              <HStack spacing={2}>
+                <Text fontSize="sm">🌙</Text>
+                <Switch
+                  colorScheme="teal"
+                  isChecked={colorMode === 'dark'}
+                  onChange={toggleColorMode}
+                />
+              </HStack>
+
+              {/* Avatar Menu */}
               <Menu>
                 <MenuButton
                   as={Button}
-                  rounded={'full'}
-                  variant={'link'}
-                  cursor={'pointer'}
+                  rounded="full"
+                  variant="link"
+                  cursor="pointer"
                   minW={0}>
                   <Avatar
-                    size={'sm'}
+                    size="sm"
                     src={user?.picture || 'https://avatars.dicebear.com/api/male/username.svg'}
                   />
                 </MenuButton>
-                <MenuList alignItems={'center'}>
+                <MenuList alignItems="center">
                   <br />
                   <Center>
                     <Avatar
-                      size={'xl'}
+                      size="xl"
                       src={user?.picture || 'https://avatars.dicebear.com/api/male/username.svg'}
                     />
                   </Center>
                   <br />
                   <Center>
                     <Text fontSize="md" fontWeight="bold">
-                      {user?.name || "Guest"}
+                      {user?.name || 'Guest'}
                     </Text>
                   </Center>
                   <br />

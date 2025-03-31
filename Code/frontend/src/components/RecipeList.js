@@ -4,16 +4,20 @@ Copyright (c) 2025 Ayush Gala, Ayush Pathak, Keyur Gondhalekar */
 
 import React, { useState } from "react";
 import {
-  Avatar, Flex, Modal, ModalBody, ModalCloseButton,
-  ModalOverlay, ModalHeader, ModalFooter, ModalContent,
-  Box, SimpleGrid, Text, Button, Heading, UnorderedList,
-  OrderedList, ListItem, Link, Code, Divider, InputGroup,
-  Input, InputRightElement, VStack
+  Box,
+  SimpleGrid,
+  Text,
+  Heading,
+  UnorderedList,
+  OrderedList,
+  ListItem,
+  Link,
+  Code,
+  Divider,
 } from "@chakra-ui/react";
 import RecipeCard from "./RecipeCard";
-import {FaPaperPlane} from "react-icons/fa"
 import recipeDB from "../apis/recipeDB";
-import ReactMarkdown from "react-markdown";
+import RecipeModal from "./RecipeModal";
 import TextToSpeech from "./TextToSpeech";
 
 // Component to handle all the recipes
@@ -44,7 +48,7 @@ const RecipeList = ({ recipes }) => {
       return `${recipe.Calories} kcal`;
     }
 
-    // Basic estimation logic (if calories are unavailable)
+    // Basic estimation logic (if calories are unavaila`ble)
     if (recipe.TotalTimeInMins) {
       const baseCalories = 200;
       const timeFactor = recipe.TotalTimeInMins * 5; // Add 5 calories per minute
@@ -54,7 +58,7 @@ const RecipeList = ({ recipes }) => {
     return "Calories Not Available";
   };
 
-  //to render the markdown UI of the AIs response properly. 
+  //to render the markdown UI of the AIs response properly.
   const ChakraUIRenderers = {
     p: (props) => <Text mb={4} {...props} />,
     h1: (props) => <Heading as="h1" size="xl" mt={6} mb={4} {...props} />,
@@ -91,33 +95,36 @@ const RecipeList = ({ recipes }) => {
         recipeName: currentRecipe.TranslatedRecipeName,
         instructions: currentRecipe.TranslatedInstructions,
         dietType: currentRecipe["Diet-type"],
-        query: aiPrompt
+        query: aiPrompt,
       };
-      
-      const response = await recipeDB.post('/recipes/aiChef', {
-        context
+
+      const response = await recipeDB.post("/recipes/aiChef", {
+        context,
       });
 
-      console.log(response)
-      
+      console.log(response);
+
       if (response.status !== 200) {
-        throw new Error('The chef is currently unreachable. Please try again in sometime!');
+        throw new Error(
+          "The chef is currently unreachable. Please try again in sometime!"
+        );
       }
 
       const data = await response.data;
-      console.log(data)
+      console.log(data);
       setAiResponse(data.response);
-
     } catch (error) {
-      console.error('Error getting AI suggestions:', error);
-      setAiResponse("Sorry, I couldn't process your request at the moment. Please try again later.");
+      console.error("Error getting AI suggestions:", error);
+      setAiResponse(
+        "Sorry, I couldn't process your request at the moment. Please try again later."
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
   const ingredientsString = currentRecipe["TranslatedIngredients"] || "";
-  const ingredientsArray = ingredientsString.split(',');
+  const ingredientsArray = ingredientsString.split(",");
 
   return (
     <>
@@ -131,7 +138,10 @@ const RecipeList = ({ recipes }) => {
         width={"70%"}
         p={5}
       >
-        <SimpleGrid spacing={5} templateColumns="repeat(auto-fill, minmax(250px, 1fr))">
+        <SimpleGrid
+          spacing={5}
+          templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
+        >
           {recipes.length !== 0 ? (
             recipes.map((recipe) => (
               <RecipeCard
@@ -151,101 +161,17 @@ const RecipeList = ({ recipes }) => {
         </SimpleGrid>
       </Box>
 
-      <Modal size={"6xl"} isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent data-testid="recipeModal">
-          <ModalHeader>{currentRecipe.TranslatedRecipeName}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Flex>
-              <Avatar size="2xl" mr={2} mb={2} src={currentRecipe["image-url"]} />
-              <Box mt={4}>
-                <Text>
-                  <Text as={"b"}>Cooking Time: </Text>
-                  {currentRecipe.TotalTimeInMins} mins
-                </Text>
-                <Text>
-                  <Text as={"b"}>Rating: </Text> {currentRecipe["Recipe-rating"]}
-                </Text>
-                <Text>
-                  <Text as={"b"}>Diet Type: </Text> {currentRecipe["Diet-type"]}
-                </Text>
-                <Text>
-                  <Text as={"b"}>Calories: </Text> {getCalories(currentRecipe)}
-                </Text>
-              </Box>
-            </Flex>
-            <Text>
-              <Text as={"b"}>Ingredients: </Text> {ingredientsArray.map((ingredients, idx) => (
-                  <div key={idx}>
-                    {ingredients.trim()}
-                  </div>
-                )
-              )}
-            </Text>
-            <Text>
-              <Text as={"b"}>Instructions: </Text> {currentRecipe["TranslatedInstructions"]}
-            </Text>
-            <Text color={"blue"}>
-              <Text color={"black"} as={"b"}>
-                Video Url:{" "}
-              </Text>
-              <a href={youtube_videos} target="_blank" rel="noopener noreferrer">
-                Youtube
-              </a>
-            </Text>
-
-            <TextToSpeech text={currentRecipe["TranslatedInstructions"]} />
-
-            {/* AI Chef Suggestion Box */}
-            <Box mt={6} p={4} borderWidth="1px" borderRadius="lg">
-              <Heading size="md" mb={3}>
-                Want to make a few substitutions? Ask Chef Gemini! 👨‍🍳✨
-              </Heading>
-              <InputGroup>
-                <Input
-                  placeholder="e.g., What can I substitute for eggs in this recipe?" 
-                  value={aiPrompt}
-                  onChange={(e) => setAiPrompt(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') handleAiSuggestion();
-                  }}
-                  pr="4.5rem"
-                />
-                <InputRightElement width="3rem">
-                  <Button
-                    h="1.75rem"
-                    size="sm"
-                    onClick={handleAiSuggestion}
-                    isLoading={isLoading}
-                    aria-label="Send prompt to AI Chef"
-                  >
-                    <FaPaperPlane />
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-              
-              {aiResponse && (
-                <VStack mt={4} align="stretch">
-                  <Divider />
-                  <Box p={3} bg="gray.50" borderRadius="md">
-                    <ReactMarkdown components={ChakraUIRenderers}>
-                      {aiResponse}
-                    </ReactMarkdown>
-                  </Box>
-                </VStack>
-              )}
-            </Box>
-
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="teal" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <RecipeModal
+        isOpen={isOpen}
+        onClose={onClose}
+        recipe={currentRecipe}
+        getCalories={getCalories}
+        aiPrompt={aiPrompt}
+        setAiPrompt={setAiPrompt}
+        aiResponse={aiResponse}
+        isLoading={isLoading}
+        handleAiSuggestion={handleAiSuggestion}
+      />
     </>
   );
 };

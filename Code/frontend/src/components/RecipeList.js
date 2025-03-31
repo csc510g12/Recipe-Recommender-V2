@@ -7,18 +7,10 @@ import {
   Box,
   SimpleGrid,
   Text,
-  Heading,
-  UnorderedList,
-  OrderedList,
-  ListItem,
-  Link,
-  Code,
-  Divider,
 } from "@chakra-ui/react";
 import RecipeCard from "./RecipeCard";
 import recipeDB from "../apis/recipeDB";
 import RecipeModal from "./RecipeModal";
-import TextToSpeech from "./TextToSpeech";
 
 // Component to handle all the recipes
 const RecipeList = ({ recipes }) => {
@@ -27,8 +19,6 @@ const RecipeList = ({ recipes }) => {
   const [aiPrompt, setAiPrompt] = useState("");
   const [aiResponse, setAiResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const youtube_videos = `https://www.youtube.com/results?search_query=${currentRecipe["TranslatedRecipeName"]}`;
 
   const handleViewRecipe = (data) => {
     setCurrentRecipe(data);
@@ -56,32 +46,6 @@ const RecipeList = ({ recipes }) => {
     }
 
     return "Calories Not Available";
-  };
-
-  //to render the markdown UI of the AIs response properly.
-  const ChakraUIRenderers = {
-    p: (props) => <Text mb={4} {...props} />,
-    h1: (props) => <Heading as="h1" size="xl" mt={6} mb={4} {...props} />,
-    h2: (props) => <Heading as="h2" size="lg" mt={5} mb={3} {...props} />,
-    h3: (props) => <Heading as="h3" size="md" mt={4} mb={2} {...props} />,
-    h4: (props) => <Heading as="h4" size="sm" mt={3} mb={2} {...props} />,
-    ul: (props) => <UnorderedList pl={4} mb={4} {...props} />,
-    ol: (props) => <OrderedList pl={4} mb={4} {...props} />,
-    li: (props) => <ListItem mb={1} {...props} />,
-    a: (props) => <Link color="teal.500" isExternal {...props} />,
-    blockquote: (props) => (
-      <Box
-        borderLeft="4px"
-        borderColor="gray.200"
-        pl={4}
-        py={1}
-        my={4}
-        {...props}
-      />
-    ),
-    code: (props) => <Code p={2} {...props} />,
-    hr: () => <Divider my={4} />,
-    // Add more elements as needed
   };
 
   // function to handle GEMINI ingredient substitutions
@@ -122,9 +86,6 @@ const RecipeList = ({ recipes }) => {
       setIsLoading(false);
     }
   };
-
-  const ingredientsString = currentRecipe["TranslatedIngredients"] || "";
-  const ingredientsArray = ingredientsString.split(",");
 
   return (
     <>

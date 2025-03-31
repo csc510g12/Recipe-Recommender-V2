@@ -8,7 +8,7 @@ const TextToSpeech = ({ text }) => {
     const [speech, setSpeech] = useState(null);
 
     // Clean out periods for TTS as it says "dot" instead of pausing
-    const cleanText = text.replace(/\./g, "   ");
+    const cleanText = text.replace(/\./g, ", ");
 
     useEffect(() => {
         const synth = window.speechSynthesis;

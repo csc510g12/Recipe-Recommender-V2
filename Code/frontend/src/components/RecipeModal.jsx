@@ -28,6 +28,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { FaPaperPlane } from "react-icons/fa";
+import TextToSpeech from "./TextToSpeech";
 
 const ChakraUIRenderers = {
   p: (props) => <Text mb={4} {...props} />,
@@ -120,6 +121,7 @@ const RecipeModal = ({
                 <Text whiteSpace="pre-wrap">
                   {recipe.TranslatedInstructions}
                 </Text>
+                <TextToSpeech text={ recipe["TranslatedInstructions"] } />
                 <Text mt={4}>
                   <b>Video Url:</b>{" "}
                   <Link color="blue.500" href={youtubeLink} isExternal>

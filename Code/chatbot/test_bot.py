@@ -11,7 +11,6 @@ from Bot import (
     get_recipes_by_ingredients, handle_message
 )
 
-
 def test_get_csv_path():
     # Test for a simple utility function
     assert get_csv_path('test.csv').endswith('Data\\test.csv')

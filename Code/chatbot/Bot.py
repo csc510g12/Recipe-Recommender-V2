@@ -10,18 +10,20 @@ this file. If not, please write to: secheaper@gmail.com
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from dotenv import load_dotenv
 import pandas as pd
 import os
 import random
+
+load_dotenv()
 
 # Method to get correct CSV file path
 def get_csv_path(filename=''):
     return os.path.dirname(__file__).replace('Code\\chatbot', 'Data\\') + filename 
 
-bot_token = '7603581964:AAH-8X19Bof-j_EiN_3YvQ9LI7WcD24Oy4I'
+bot_token = os.environ.get('TELEGRAM_BOT_TOKEN')
 app = Application.builder().token(bot_token).build()
 recipe_df = pd.read_csv(get_csv_path('final_recipe_recommender.csv'))
-cuisine_df = pd.read_csv(get_csv_path('Cuisine.csv'))
 
 # Methods to reply to the user
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -44,7 +46,7 @@ async def provide_ingredients(update: Update, context: ContextTypes.DEFAULT_TYPE
 
 async def get_cuisines(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
-    cuisines = cuisine_df['Cuisine'].unique()
+    cuisines = recipe_df['Cuisine'].unique()
     keyboard = [[InlineKeyboardButton(cuisine, callback_data=f'cuisine_{cuisine}')] for cuisine in cuisines]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(text="Select a cuisine:", reply_markup=reply_markup)

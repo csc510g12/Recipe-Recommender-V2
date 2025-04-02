@@ -6,10 +6,11 @@ from telegram.ext import CallbackContext
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 from Bot import (
-    get_csv_path, start, add_recipe, provide_ingredients, get_cuisines,
+    get_csv_path, start, provide_ingredients, get_cuisines,
     show_dishes_by_cuisine, show_recipe_details, get_instructions_by_dish_name,
     get_recipes_by_ingredients, handle_message
 )
+
 
 def test_get_csv_path():
     # Test for a simple utility function
@@ -29,18 +30,6 @@ async def test_start():
 
     # Check if reply_text was called
     update.message.reply_text.assert_called_once()
-
-
-@pytest.mark.asyncio
-async def test_add_recipe():
-    update = MagicMock()
-    update.callback_query = MagicMock()
-    update.callback_query.edit_message_text = AsyncMock()
-    context = MagicMock()
-
-    await add_recipe(update, context)
-
-    update.callback_query.edit_message_text.assert_called_once()
 
 
 @pytest.mark.asyncio
@@ -425,9 +414,9 @@ async def test_start_command_response():
     # Verify the InlineKeyboardMarkup structure
     expected_reply_markup = InlineKeyboardMarkup(
         inline_keyboard=[
-            [InlineKeyboardButton(text="Get Cuisines", callback_data="get_cuisines")],
-            [InlineKeyboardButton(text="Provide Available Ingredients", callback_data="prov_ingred")],
-            [InlineKeyboardButton(text="Share Your Own Recipe", callback_data="add_recipe")],
+            [InlineKeyboardButton(text="Get recipe of selected cuisine", callback_data="get_cuisines")],
+            [InlineKeyboardButton(text="Provide ingredients for recipe", callback_data="prov_ingred")],
+            [InlineKeyboardButton(text="Generate AI recipe with Chef Gemini", callback_data='gen_ai_recipe')],
         ]
     )
 

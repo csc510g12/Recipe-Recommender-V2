@@ -118,10 +118,13 @@ const RecipeModal = ({
                 <Text fontWeight="bold" mt={4}>
                   Instructions:
                 </Text>
-                <Text whiteSpace="pre-wrap">
-                  {recipe.TranslatedInstructions}
-                </Text>
-                <TextToSpeech text={ recipe["TranslatedInstructions"] } />
+                <Box mt={2}>
+                  <ReactMarkdown components={ChakraUIRenderers}>
+                    {recipe.TranslatedInstructions ||
+                      "No instructions provided."}
+                  </ReactMarkdown>
+                </Box>
+                <TextToSpeech text={recipe["TranslatedInstructions"]} />
                 <Text mt={4}>
                   <b>Video Url:</b>{" "}
                   <Link color="blue.500" href={youtubeLink} isExternal>
@@ -194,7 +197,6 @@ const RecipeModal = ({
         </ModalContent>
       </Modal>
 
-      
       <Modal /* Fullscreen Instructions Modal */
         isOpen={showInstructionModal}
         onClose={() => setShowInstructionModal(false)}
@@ -205,18 +207,12 @@ const RecipeModal = ({
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <ModalBody
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            fontSize={["2xl", "3xl", "4xl"]}
-            textAlign="center"
-            px={10}
-            py={20}
-            whiteSpace="pre-wrap"
-            lineHeight="2"
-          >
-            {recipe.TranslatedInstructions || "No instructions available."}
+          <ModalBody px={[4, 10]} py={10}>
+            <Box maxW="5xl" mx="auto" fontSize={["md", "lg", "xl"]}>
+              <ReactMarkdown components={ChakraUIRenderers}>
+                {recipe.TranslatedInstructions || "No instructions available."}
+              </ReactMarkdown>
+            </Box>
           </ModalBody>
         </ModalContent>
       </Modal>

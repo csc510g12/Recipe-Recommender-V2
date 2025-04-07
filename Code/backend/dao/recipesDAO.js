@@ -21,7 +21,9 @@ export default class RecipesDAO {
             ingredients = await conn
                 .db(process.env.RECIPES_NS)
                 .collection("ingredient_list");
-            users = await conn.db(process.env.RECIPES_NS).collection("user");
+            users = await conn
+                .db(process.env.RECIPES_NS)
+                .collection("user");
         } catch (e) {
             console.error(
                 `Unable to establish a collection handle in recipesDAO: ${e}`
@@ -65,7 +67,7 @@ export default class RecipesDAO {
                 return { success: false };
             } else {
                 const res = await users.insertOne(data);
-                return { success: true };
+                return res;
             }
         }
     }

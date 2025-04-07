@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChakraProvider, Button } from '@chakra-ui/react';
+import { FaMicrophone, FaMicrophoneSlash } from 'react-icons/fa';
 
 const TextToSpeech = ({ text }) => {
 
@@ -56,7 +57,7 @@ const TextToSpeech = ({ text }) => {
 
     return (
         <ChakraProvider>
-            <Button colorScheme="teal" variant="solid" onClick={ handleClick }> {paused ? "Play" : "Pause"} </Button>
+            <Button colorScheme="teal" variant="solid" onClick={ handleClick }> {paused ? <FaMicrophone /> : <FaMicrophoneSlash />} </Button>
         </ChakraProvider>
     )
 }

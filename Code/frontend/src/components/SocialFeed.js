@@ -30,11 +30,6 @@ const SocialFeed = () => {
 
     return (
         <div>
-            <Center>
-                <IconButton
-                    icon={<IoMdAddCircleOutline />}
-                />
-            </Center>
             {posts.map((post) => (
                 <Social 
                     key={post._id}

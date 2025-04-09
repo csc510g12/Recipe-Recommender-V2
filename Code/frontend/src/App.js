@@ -201,7 +201,7 @@ class App extends Component {
                   <Tab>Search Recipe By Name</Tab>
                   <Tab>Grocery List</Tab>
                   <Tab>Social</Tab>
-                  <Tab>Temp</Tab>
+                  <Tab>Post</Tab>
                 </TabList>
                 <TabPanels>
                   <TabPanel>

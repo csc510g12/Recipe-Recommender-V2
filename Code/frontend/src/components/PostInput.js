@@ -1,14 +1,15 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import {
     Input,
     Box,
     VStack,
     Text,
     Button,
+    Center
 } from "@chakra-ui/react";
 import recipeDB from "../apis/recipeDB.js";
 import { useAuth0 } from "@auth0/auth0-react";
-import { IoMdReturnLeft } from "react-icons/io";
+import { IoMdAddCircleOutline } from "react-icons/io";
 import "./css/imagebox.css";
 
 const PostInput = () => {
@@ -100,9 +101,11 @@ const PostInput = () => {
                         variant="outlined"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)} />
-                    <Button colorScheme="green" type="submit">
-                        <IoMdReturnLeft />
-                    </Button>
+                    <Center>
+                        <Button colorScheme="green" type="submit">
+                            Post
+                        </Button>
+                    </Center>
                 </form>
             </Box>
         </div>

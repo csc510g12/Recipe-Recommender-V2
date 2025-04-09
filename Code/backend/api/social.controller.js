@@ -8,7 +8,7 @@ export default class SocialController {
             res.json(createResult);
         } catch (e) {
             console.error("apiCreate Post error.");
-            res.status(500).json({ error: e.message });
+            res.status(500).json({ error: "EEEE" });
         }
     }
 
@@ -18,7 +18,7 @@ export default class SocialController {
             res.json(posts);
         } catch(e) {
             console.error("apiGetAllPosts error.");
-            res.status(500).json({ error: e.message });
+            res.status(500).json({ error: "EEEE" });
         }
     }
 

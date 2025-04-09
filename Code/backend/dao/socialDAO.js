@@ -42,6 +42,7 @@ export default class SocialDAO {
                 image: image,
                 description: description,
                 comments: [],
+                likes: 0,
                 createdAt: new Date(),
             };
             return await social.insertOne(postDoc);
@@ -70,5 +71,13 @@ export default class SocialDAO {
             console.error("Error posting comment.");
             return { error: e };
         }
+    }
+
+    static async incrementLikes(postId) {
+        const objectId = new mongodb.ObjectId(postId);
+        return await social.updateOne(
+            {_id: objectId},
+            {$inc: { likes: 1 }}
+        );
     }
 }

@@ -18,12 +18,7 @@ const Social = ({ post, onCommentSuccess }) => {
     const { user } = useAuth0();
     
     const [localPost, setLocalPost] = useState(post);
-    const [likes, setLikes] = useState(0);
     const [newComment, setNewComment] = useState('');
-
-    const handleLike = () => {
-        setLikes(prevLikes => prevLikes + 1);
-    }
 
     const handleComment = async () => {
         if (!newComment.trim()) return;
@@ -43,6 +38,15 @@ const Social = ({ post, onCommentSuccess }) => {
             setNewComment("");
         } catch (e) {
             console.error("Failed to post comment", e);
+        }
+    };
+
+    const handleLike = async () => {
+        try {
+            await recipeDB.post("/social/post/addLike", { postId: localPost._id });
+            setLocalPost({ ...localPost, likes: (localPost.likes ?? 0) + 1 });
+        } catch (e) {
+            console.error("Failed to add like.");
         }
     };
 
@@ -77,7 +81,7 @@ const Social = ({ post, onCommentSuccess }) => {
                         aria-label="Like"
                         mr={2} 
                     />
-                    <Text>{likes} Likes</Text>
+                    <Text>{localPost.likes} Likes</Text>
                 </Flex>
                 <Box px={4} pb={4}>
                     <VStack align="stretch" space={2}>

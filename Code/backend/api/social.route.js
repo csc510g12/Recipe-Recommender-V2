@@ -21,6 +21,7 @@ router.route("/").get(SocialCtrl.apiGetAllPosts);
 router.route("/post").post(SocialCtrl.apiCreatePost);
 router.route("/:id").get(SocialCtrl.apiGetPostById);
 router.route("/post/addComment").post(SocialCtrl.apiAddComments);
+router.route("/post/addLike").post(SocialCtrl.apiAddLike);
 
 router.post("/uploadImage", upload.single("image"), (req, res) => {
     const file = req.file;

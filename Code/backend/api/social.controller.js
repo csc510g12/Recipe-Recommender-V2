@@ -46,4 +46,14 @@ export default class SocialController {
             res.status(500).json({ error: e.message });
         }
     }
+
+    static async apiAddLike(req, res) {
+        try {
+            const { postId } = req.body;
+            const update = await SocialDAO.incrementLikes(postId);
+            res.json(update);
+        } catch (e) {
+            res.status(500).json({ error: e.message });
+        }
+    }
 }

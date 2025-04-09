@@ -7,25 +7,44 @@ import {
     Flex,
     VStack,
     HStack,
-    Input
+    Input,
 } from '@chakra-ui/react';
 import { FaHeart, FaLocationArrow } from 'react-icons/fa';
+import recipeDB from "../apis/recipeDB.js";
+import { useAuth0 } from "@auth0/auth0-react";
 
-const Social = () => {
+const Social = ({ post, onCommentSuccess }) => {
+
+    const { user } = useAuth0();
     
+    const [localPost, setLocalPost] = useState(post);
     const [likes, setLikes] = useState(0);
-    const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
 
     const handleLike = () => {
         setLikes(prevLikes => prevLikes + 1);
     }
 
-    const handleComment = () => {
+    const handleComment = async () => {
         if (!newComment.trim()) return;
-        setComments([newComment, ...comments]);
-        setNewComment('');
-    }
+        try {
+            await recipeDB.post("/social/post/addComment", {
+                postId: localPost._id,
+                userName: user.nickname,
+                commentText: newComment
+            });
+
+            const updatedComments = [
+                { userName: user.nickname, text: newComment },
+                ...localPost.comments,
+            ];
+
+            setLocalPost({...localPost, comments: updatedComments});
+            setNewComment("");
+        } catch (e) {
+            console.error("Failed to post comment", e);
+        }
+    };
 
     return (
         <div>
@@ -37,13 +56,19 @@ const Social = () => {
             mx="auto"
             mt={8}
             >
-                <Image
-                    src=""
-                    alt="Post Image"
-                    objectFit="cover"
-                    width="100%"
-                    height="auto" 
-                />
+                {localPost.image && (
+                    <Image
+                        src={localPost.image}
+                        alt="Post Image"
+                        objectFit="cover"
+                        width="100%"
+                        height="auto" 
+                    />
+                )}
+                <Box p={4}>
+                    <Text fontWeight="bold">{localPost.userName}</Text>
+                    <Text>{localPost.description}</Text>
+                </Box>
                 <Flex alignItems="center" p={4}>
                     <IconButton
                         icon={<FaHeart />}
@@ -56,9 +81,12 @@ const Social = () => {
                 </Flex>
                 <Box px={4} pb={4}>
                     <VStack align="stretch" space={2}>
-                        {comments.map((comment, index) => (
+                        {localPost.comments && localPost.comments.map((comment, index) => (
                             <Box key={index} bg="gray.100" p={2} borderRadius="md">
-                                <Text>{comment}</Text>
+                                <Text>
+                                    <strong>{comment.userName}: </strong>
+                                    {comment.text}
+                                </Text>
                             </Box>
                         ))}
                     </VStack>

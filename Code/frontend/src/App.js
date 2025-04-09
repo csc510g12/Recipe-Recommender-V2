@@ -14,7 +14,8 @@ import SearchByRecipe from "./components/SearchByRecipe.js";
 import UserProfile from "./components/UserProfile.js";
 import LoginButton from './components/LoginButton';
 import Nav from "./components/Navbar.js";
-import Social from "./components/Social.js";
+import SocialFeed from "./components/SocialFeed.js";
+import PostInput from "./components/PostInput.js";
 
 import GroceryList from "./components/GroceryList";
 
@@ -199,7 +200,8 @@ class App extends Component {
                   <Tab>Add Recipe</Tab>
                   <Tab>Search Recipe By Name</Tab>
                   <Tab>Grocery List</Tab>
-                  <Tab>Social</Tab> 
+                  <Tab>Social</Tab>
+                  <Tab>Temp</Tab>
                 </TabList>
                 <TabPanels>
                   <TabPanel>
@@ -225,7 +227,10 @@ class App extends Component {
                     <GroceryList groceryList={this.state.groceryList} fetchGroceryList={this.handleGetGroceryList} />
                   </TabPanel>
                   <TabPanel>
-                    <Social />
+                    <SocialFeed />
+                  </TabPanel>
+                  <TabPanel>
+                    <PostInput />
                   </TabPanel>
                 </TabPanels>
               </Tabs>

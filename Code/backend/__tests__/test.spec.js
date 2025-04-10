@@ -26,7 +26,7 @@ function test_connectivity_func() {
   // const uri =
   //   "mongodb+srv://atharvajoshi067:ZgSvdar14OnteUZx@cluster0.9zuebnu.mongodb.net/recipe_recommender?retryWrites=true&w=majority";
   const uri = 
-    "mongodb+srv://group2:group2@recipe-recommender.faeur.mongodb.net/?retryWrites=true&w=majority&appName=recipe-recommender"
+    "mongodb+srv://project3:project32250358@csc510-project1.fnmgd.mongodb.net/?retryWrites=true&w=majority&appName=CSC510-Project1"
   var result = false;
   try {
     // Connect to the MongoDB cluster

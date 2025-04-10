@@ -19,7 +19,6 @@ const router = express.Router();
 
 router.route("/").get(SocialCtrl.apiGetAllPosts);
 router.route("/post").post(SocialCtrl.apiCreatePost);
-router.route("/:id").get(SocialCtrl.apiGetPostById);
 router.route("/post/addComment").post(SocialCtrl.apiAddComments);
 router.route("/post/addLike").post(SocialCtrl.apiAddLike);
 

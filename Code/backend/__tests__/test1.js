@@ -1,4 +1,4 @@
-const request = require("supertest")("http://localhost:1000/api/v1");
+const request = require("supertest")("http://localhost:3003/api/v1");
 const expect = require("chai").expect;
 
 describe("GET /recipes", function () {

@@ -1,6 +1,4 @@
-import { request } from "express";
 import RecipesDAO from "../dao/recipesDAO.js";
-import axios from "axios";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const defaultPassword = 'password';

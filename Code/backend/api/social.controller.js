@@ -22,17 +22,6 @@ export default class SocialController {
         }
     }
 
-    static async apiGetPostById(req, res, next) {
-        try {
-            const postId = req.params.id;
-            const post = await SocialDAO.getPostId({ postId });
-            res.json(post);
-        } catch (e) {
-            console.error("apiGetPostById error.");
-            res.status(500).json({ error: e.message });
-        }
-    }
-
     static async apiAddComments(req, res, next) {
         try {
             const { postId, userName, commentText } = req.body;

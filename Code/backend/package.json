@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "set CI=true && jest",
+    "test": "jest",
     "lint": "eslint 'dao/**.js'",
     "format": "prettier --check ./dao",
     "format:fix": "prettier --write ./dao"
@@ -27,6 +27,8 @@
     "util": "^0.12.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.10",
+    "@babel/preset-env": "^7.26.9",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.1",
@@ -38,18 +40,20 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
     "jest-mock": "^29.7.0",
+    "mongodb-memory-server": "^10.1.4",
     "nodemon": "^3.1.7",
     "prettier": "^2.4.1",
     "supertest": "^6.1.6"
   },
   "jest": {
     "collectCoverageFrom": [
-      "/__tests__/*.{js,jsx}"
+      "/backend/**/*.{js,jsx}"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "package.json",
       "package-lock.json"
-    ]
+    ],
+    "testEnvironment": "node"
   }
 }

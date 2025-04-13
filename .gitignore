@@ -6,6 +6,12 @@ package-lock.json
 
 *.env
 
+# Python
+**/__pycache__/
+**/.pytest_cache/
+venv
+.venv
+
 ### Node ###
 # Logs
 logs

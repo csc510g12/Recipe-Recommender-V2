@@ -9,7 +9,7 @@
 
 - [Social Media Posts, Voice Cooking Instructions](https://drive.google.com/file/d/1gX8Qp8OZW3hiSyWRSCC0TALqqZmDYGxr/view?usp=sharing) by [Alex Kuang](https://github.com/azkuang)
 - [Dark Theme, Big Screen Mode, Markdown Supported Cooking Instructions](https://drive.google.com/file/d/1gX8Qp8OZW3hiSyWRSCC0TALqqZmDYGxr/view?usp=sharing) by [Gavin Gong](https://github.com/VisualDust)
-- [AI-Powered Recipe Generation Accessable from Telegram](todo) by [Ohm Desai](https://github.com/odesai840)
+- [AI-Powered Recipe Generation Accessable from Telegram](https://drive.google.com/file/d/1wAlefthe6GfM62J-TR9Rs2T41aGO7tn4/view?usp=sharing) by [Ohm Desai](https://github.com/odesai840)
 
 ### What's new?
 

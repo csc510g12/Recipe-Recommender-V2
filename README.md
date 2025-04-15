@@ -1,6 +1,6 @@
 # Saveur Sélection: Your AI-powered Recipe Recommender!
 
-[![Made With](https://img.shields.io/badge/made%20with-javascript-gree)](https://www.javascript.com/) [![DOI](https://zenodo.org/badge/944599061.svg)](https://doi.org/10.5281/zenodo.15212649) [![GitHub issues open](https://img.shields.io/github/issues/csc510g12/Recipe-Recommender-V2)](https://github.com/csc510g12/Recipe-Recommender-V2/issues) [![Github closed issues](https://img.shields.io/github/issues-closed-raw/csc510g12/Recipe-Recommender-V2)](https://github.com/csc510g12/Recipe-Recommender-V2/issues?q=is%3Aissue%20state%3Aclosed) [![GitHub stars](https://badgen.net/github/stars/csc510g12/Recipe-Recommender-V2)](https://github.com/csc510g12/Recipe-Recommender-V2) [![codecov](https://codecov.io/gh/usmanwardag/dollar_bot/branch/main/graph/badge.svg?token=PYAWX95R67)](https://codecov.io/gh/usmanwardag/dollar_bot) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier) [![Respost - Write comment to new Issue event](https://github.com/csc510g12/Recipe-Recommender-V2/actions/workflows/Respost.yml/badge.svg)](https://github.com/csc510g12/Recipe-Recommender-V2/actions/workflows/Respost.yml) ![GitHub contributors](https://img.shields.io/github/contributors/csc510g12/Recipe-Recommender-V2) [![Code Formatter and Syntax Check](https://github.com/csc510g12/Recipe-Recommender-V2/actions/workflows/Code_Formatter_and_Syntax_Check.yml/badge.svg?event=workflow_dispatch)](https://github.com/csc510g12/Recipe-Recommender-V2/actions/workflows/Code_Formatter_and_Syntax_Check.yml) [![Running Code Coverage](https://github.com/csc510g12/Recipe-Recommender-V2/actions/workflows/coverage.yml/badge.svg)](https://github.com/csc510g12/Recipe-Recommender-V2/actions/workflows/coverage.yml) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/csc510g12/Recipe-Recommender-V2) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/csc510g12/Recipe-Recommender-V2/blob/main/LICENSE)
+[![Made With](https://img.shields.io/badge/made%20with-javascript-gree)](https://www.javascript.com/) [![DOI](https://zenodo.org/badge/944599061.svg)](https://doi.org/10.5281/zenodo.15212649) [![GitHub issues open](https://img.shields.io/github/issues/csc510g12/Recipe-Recommender-V3)](https://github.com/csc510g12/Recipe-Recommender-V3/issues) [![Github closed issues](https://img.shields.io/github/issues-closed-raw/csc510g12/Recipe-Recommender-V3)](https://github.com/csc510g12/Recipe-Recommender-V3/issues?q=is%3Aissue%20state%3Aclosed) [![GitHub stars](https://badgen.net/github/stars/csc510g12/Recipe-Recommender-V3)](https://github.com/csc510g12/Recipe-Recommender-V3) [![codecov](https://codecov.io/gh/usmanwardag/dollar_bot/branch/main/graph/badge.svg?token=PYAWX95R67)](https://codecov.io/gh/usmanwardag/dollar_bot) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier) [![Respost - Write comment to new Issue event](https://github.com/csc510g12/Recipe-Recommender-V3/actions/workflows/Respost.yml/badge.svg)](https://github.com/csc510g12/Recipe-Recommender-V3/actions/workflows/Respost.yml) ![GitHub contributors](https://img.shields.io/github/contributors/csc510g12/Recipe-Recommender-V3) [![Code Formatter and Syntax Check](https://github.com/csc510g12/Recipe-Recommender-V3/actions/workflows/Code_Formatter_and_Syntax_Check.yml/badge.svg?event=workflow_dispatch)](https://github.com/csc510g12/Recipe-Recommender-V3/actions/workflows/Code_Formatter_and_Syntax_Check.yml) [![Running Code Coverage](https://github.com/csc510g12/Recipe-Recommender-V3/actions/workflows/coverage.yml/badge.svg)](https://github.com/csc510g12/Recipe-Recommender-V3/actions/workflows/coverage.yml) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/csc510g12/Recipe-Recommender-V3) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/csc510g12/Recipe-Recommender-V3/blob/main/LICENSE)
 
 
 ## SE25/G12 new version is out!
@@ -119,7 +119,7 @@ The user profile serves as a central hub for managing all bookmarked recipes, en
 7. Secure Logout:
 Users can securely log out of their accounts, terminating the active session and redirecting them to the landing page. Future access will require re-authentication, maintaining security and ensuring that user data remains protected.
 
-### More source documentation can be found at: [Recipe Recommender Docs](https://github.com/csc510g12/Recipe-Recommender-V2/tree/main/docs)
+### More source documentation can be found at: [Recipe Recommender Docs](https://github.com/csc510g12/Recipe-Recommender-V3/tree/main/docs)
 
 
 ## API Documentation
@@ -171,7 +171,7 @@ This endpoint provides AI-powered recipe recommendations and ingredient substitu
 `apiGetGroceryList`
 This endpoint retrieves a structured grocery list based on the recipes a user has bookmarked. The request requires a username as a query parameter, and the response includes a categorized list of ingredients needed to prepare the selected recipes.
 
-A more comprehensive API documentation can be found at: [Recipe Recommender Docs](https://github.com/csc510g12/Recipe-Recommender-V2/tree/main/docs)
+A more comprehensive API documentation can be found at: [Recipe Recommender Docs](https://github.com/csc510g12/Recipe-Recommender-V3/tree/main/docs)
 
 ## Technology Stack
 
@@ -236,7 +236,7 @@ This project is licensed under the terms of the MIT license. Please check [Licen
 
 ## How to Contribute
 
-Please see our [CONTRIBUTING.md](/CONTRIBUTING.md) for instructions on how to contribute to the project by completing some of the [issues](https://github.com/csc510g12/Recipe-Recommender-V2/issues).
+Please see our [CONTRIBUTING.md](/CONTRIBUTING.md) for instructions on how to contribute to the project by completing some of the [issues](https://github.com/csc510g12/Recipe-Recommender-V3/issues).
 
 ## Team Members
 
@@ -257,7 +257,7 @@ This project is a collaborative effort by a dedicated team of developers and men
 - Mullamuri, Venkata Yaswanth
 - Gupta, Ayush
 - Baddi, Yaswanth
-- [etc.](https://github.com/csc510g12/Recipe-Recommender-V2/graphs/contributors)
+- [etc.](https://github.com/csc510g12/Recipe-Recommender-V3/graphs/contributors)
 
 ### Project Mentors
 

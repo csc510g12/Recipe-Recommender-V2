@@ -241,7 +241,7 @@ Please see our [CONTRIBUTING.md](/CONTRIBUTING.md) for instructions on how to co
 This project is a collaborative effort by a dedicated team of developers and mentors, working together to enhance and refine its features over multiple iterations. We appreciate the contributions of both current and past members who have played a vital role in shaping this project.  
 
 
-### Contributors for version 2.0
+### Contributors for version 3.0
 
 - [Alex Kuang](https://github.com/azkuang)
 - [Gavin Gong](https://github.com/VisualDust)
